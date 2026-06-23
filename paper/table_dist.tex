@@ -1,0 +1,28 @@
+\begin{table}[t]\centering\small
+\caption{Distributional robustness on the \emph{heteroscedastic} Scenario~2 DGP ($\sigma_1=0.4$), so the truth is $\beta_{\tau,1}^{\rm true}=\beta_{01}+\sigma_1 q_\tau(F_G)$ and shifts with the error law $F_G$ (reported as $\beta_1^{\rm tr}$ for independent verification). The marker error is a standardized non-normal law via a Gaussian copula (latent-Gaussian dependence preserved; raw within-subject correlation not held fixed): ``t5'' is standardized Student-$t_5$, ``skew'' a standardized right-skew lognormal. $R=500$, coverage over $300$ ($B=300$; MC SE $\approx0.013$). Point estimation stays approximately unbiased for both slopes; bootstrap coverage is generally satisfactory ($0.91$--$0.98$), with moderate under-coverage (min $\approx0.91$) in a few cells.}
+\label{tab:dist}\begin{tabular}{lrr r rr r rr}\toprule
+err&$n$&$\tau$&$\beta_1^{\rm tr}$&bias$_{\beta1}$&ESD$_{\beta1}$&cov$_{\beta1}$&bias$_{\beta2}$&cov$_{\beta2}$\\\midrule
+skew & 500 & 0.25 & 0.222 & 0.004 & 0.084 & 0.960 & -0.001 & 0.963 \\
+skew & 500 & 0.50 & 0.412 & -0.004 & 0.110 & 0.970 & 0.002 & 0.950 \\
+skew & 500 & 0.75 & 0.677 & -0.014 & 0.165 & 0.947 & -0.001 & 0.910 \\
+\addlinespace
+skew & 1000 & 0.25 & 0.222 & 0.002 & 0.063 & 0.913 & 0.001 & 0.957 \\
+skew & 1000 & 0.50 & 0.412 & -0.001 & 0.076 & 0.980 & -0.001 & 0.930 \\
+skew & 1000 & 0.75 & 0.677 & -0.004 & 0.118 & 0.957 & 0.002 & 0.943 \\
+\addlinespace
+skew & 2000 & 0.25 & 0.222 & 0.001 & 0.040 & 0.977 & 0.001 & 0.957 \\
+skew & 2000 & 0.50 & 0.412 & -0.003 & 0.057 & 0.923 & -0.001 & 0.953 \\
+skew & 2000 & 0.75 & 0.677 & -0.006 & 0.083 & 0.940 & -0.001 & 0.963 \\
+\addlinespace
+t5 & 500 & 0.25 & 0.275 & 0.007 & 0.131 & 0.953 & 0.001 & 0.950 \\
+t5 & 500 & 0.50 & 0.500 & -0.002 & 0.112 & 0.947 & -0.002 & 0.967 \\
+t5 & 500 & 0.75 & 0.725 & -0.004 & 0.118 & 0.960 & -0.000 & 0.957 \\
+\addlinespace
+t5 & 1000 & 0.25 & 0.275 & 0.008 & 0.090 & 0.930 & 0.001 & 0.950 \\
+t5 & 1000 & 0.50 & 0.500 & 0.005 & 0.077 & 0.950 & 0.004 & 0.943 \\
+t5 & 1000 & 0.75 & 0.725 & 0.005 & 0.086 & 0.960 & 0.000 & 0.960 \\
+\addlinespace
+t5 & 2000 & 0.25 & 0.275 & 0.005 & 0.066 & 0.947 & 0.000 & 0.957 \\
+t5 & 2000 & 0.50 & 0.500 & 0.001 & 0.058 & 0.927 & 0.001 & 0.943 \\
+t5 & 2000 & 0.75 & 0.725 & -0.003 & 0.062 & 0.940 & 0.001 & 0.937 \\
+\bottomrule\end{tabular}\end{table}

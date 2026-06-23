@@ -1,0 +1,211 @@
+\documentclass[11pt]{article}
+% ============================================================================
+% Supplement to the JASA-structured MWQTM manuscript.
+%   A. Proofs            (transport/identification/orthogonality/remainder/
+%                         one-step normality/sandwich; clustered Bahadur;
+%                         censoring orthogonality)  -- imported proof bodies
+%   B. Algorithms and implementation
+%   C. Additional simulations (audit and sensitivity tables)
+%   D. Additional application details
+% ============================================================================
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,booktabs,graphicx,natbib,hyperref}
+\usepackage{xr}
+\externaldocument{paper}                      % cross-reference the main paper
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{assumption}{Assumption}
+\newtheorem{condition}{Condition}
+\theoremstyle{remark}\newtheorem{remark}{Remark}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand{\Pn}{\mathbb{P}_n}
+\newcommand{\Gn}{\mathbb{G}_n}
+\newcommand{\X}{\bm{X}}
+\newcommand{\Z}{\bm{Z}}
+\newcommand{\bbeta}{\bm{\beta}}
+\newcommand{\bgamma}{\bm{\gamma}}
+\newcommand{\bth}{\bm{\theta}}
+\newcommand{\indc}[1]{\mathbf{1}\{#1\}}
+\newcommand{\given}{\,\vert\,}
+\newcommand{\binit}{\widehat\bbeta_{\rm init}}
+\newcommand{\rom}{r_{\omega}}
+\newcommand{\op}{\mathrm{op}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+
+\renewcommand{\thesection}{S\arabic{section}}
+\renewcommand{\thetable}{S\arabic{table}}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\theequation}{S\arabic{equation}}
+
+\title{\bf Supplement to ``Event-aligned conditional quantile trajectories of a
+biomarker before disease onset under left truncation and competing death''}
+\author{Zexi Jin}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\bigskip
+
+This supplement collects the proofs (Section~\ref{supp:proofs}), the estimation
+algorithms and implementation details (Section~\ref{supp:algo}), the full set of
+simulation and audit/sensitivity studies summarized in Section~\ref{sec:sim} of the
+main paper (Section~\ref{supp:sims}), and additional details of the application
+(Section~\ref{supp:app}). Equations, tables, and figures are numbered S1, S2, \dots;
+references of the form ``Theorem~1'' point to the main paper.
+
+% ============================================================================
+\section{Proofs}\label{supp:proofs}
+This section reproduces the asymptotic theory: the transport/identification
+arguments, the implicit density-weighted orthogonalization, the censoring
+orthogonality ($\chi^C=0$), the sharper-remainder bound, the high-level
+cross-fitted one-step asymptotic normality and sandwich consistency, and the
+clustered, weighted, growing-sieve Gram/Knight/Bahadur representation that verifies
+the high-level conditions for the concrete sieve. The numbering of internal
+results is self-contained within this section.
+
+\subsection*{S1.A\quad Identification, orthogonality, one-step normality, sandwich}
+\input{proof_body}
+
+\subsection*{S1.B\quad Censoring orthogonality of the IPW quantile score}
+\input{censoring_orthogonality_body}
+
+\subsection*{S1.C\quad Clustered weighted growing-sieve Bahadur representation}
+\input{bahadur_body}
+
+% ============================================================================
+\section{Algorithms and implementation}\label{supp:algo}
+
+\paragraph{Sieve basis.} The baseline surface $m_{\tau}(u,t)$ uses a tensor-product
+cubic B-spline basis $\{B_k(u,t)\}$ over the two time scales, a partition of unity
+(so no separate intercept enters the design). The implementation uses this
+partition-of-unity basis; the asymptotic analysis (Section~\ref{supp:proofs}) uses
+the $L_2$-normalized basis $\widetilde B_k=\sqrt K\,B_k$, under which the population
+Gram has eigenvalues bounded away from $0$ and $\infty$; the two differ by the
+fixed scaling $\sqrt K$, which cancels in the estimator.
+
+\paragraph{Complexity selection (A-CV).} The number of interior knots / spline
+degrees of freedom and any penalty $\lambda_n$ are chosen by subject-level
+$K$-fold cross-validation minimizing the held-out check loss (the ``-CV'' suffix).
+A fixed richer-sieve fit (``A-Rich'', $K{+}2$) is reported as a sensitivity
+comparison, not a theory-guided undersmoothing rule. The reported pilot uses a
+regression-spline sieve (fixed knots, $\lambda_n=0$).
+
+\paragraph{Sparsity and projection (B-OS-CF).} The conditional density at the
+quantile, $f_\tau(0)$, is estimated by the Hendricks--Koenker quantile-spacing
+sparsity $\widehat f_\tau(0)=\{(\widehat q_{\tau+a_n}-\widehat q_{\tau-a_n})/(2a_n)\}^{-1}$,
+rearranged for positivity and truncated to $[f_{\min},f_{\max}]$. The
+density-weighted projection $\widehat g_{\tau,\omega}$ solves a weighted spline
+least-squares regression of $\X$ on $B_g(u,t)$ with weights
+$a_\omega\widehat f_\tau(0)$. Cross-fitting over subject folds is part of the
+estimator definition (Section~\ref{sec:onestep} of the main paper).
+
+\paragraph{Bootstrap and fold discipline.} Inference for the A-CV point estimator
+uses a full-pipeline subject-level bootstrap: subjects (not observations) are
+resampled, preserving within-subject clustering, and the entire pipeline
+(complexity selection and, for B-OS-CF, nuisance fitting) is refit on each
+resample. Cross-validation folds are formed by subject id, so no subject's visits
+appear in both training and held-out folds; a controlled same-dataset comparison
+(Table~\ref{tab:leakfold}) quantifies the effect of violating this fold discipline.
+
+\paragraph{Crossing.} Predicted quantile curves are made monotone in $\tau$ by
+rearrangement; this is a pointwise post-processing step that does not alter the raw
+$\widehat\bbeta_\tau$ used for inference.
+
+\paragraph{Reproducibility and computational audit.} A computational-failure audit
+(Table~\ref{tab:audit}) records the disposition of every replicate (QR-solver
+status, degenerate folds, support-mask exclusions) so that reported summaries are
+not silently conditioned on ``clean'' replicates. Code is available at the
+companion repository.
+
+% ============================================================================
+\section{Additional simulations}\label{supp:sims}
+This section gives the full designs and complete tables for the studies summarized
+in Section~\ref{sec:sim} of the main paper. Unless noted, $R$ denotes the number of
+Monte-Carlo replicates and coverage is for the $95\%$ subject-bootstrap interval.
+
+\subsection{Estimator family and finite-sample inference}
+\input{table_estimators}
+\input{table_estfull}
+\input{table_estse}
+\input{table_bosc}
+
+\subsection{Censoring weights and orthogonality}
+The complete-event (CC), IPCW, and oracle-weight (ORC) estimators, the
+estimated-vs-oracle weight-gap rate, and hard-censoring behavior.
+\input{table_cc}
+\input{table_compare}
+\input{table_censhard}
+\input{table_corr}
+
+\subsection{Surface recovery and density-weighted centering}
+\input{table_surface}
+\input{table_ordcenter}
+\input{table_studentized}
+
+\subsection{Sieve growth, tuning, and cross-validation behavior}
+\input{table_sieve}
+\input{table_sievetail}
+\input{table_tuning}
+\input{table_ladder}
+\input{table_cvfreq}
+\input{table_fixedj}
+
+\subsection{Fold discipline and randomization}
+\input{table_foldsens}
+\input{table_leakfold}
+
+\subsection{Non-Gaussian errors and crossing}
+\input{table_dist}
+\input{table_sievedist}
+\input{table_crossing}
+
+\subsection{Onset-distribution robustness (non-proportional hazards / AFT) and pilot}
+\input{table1}
+\input{table_nonph}
+
+\subsection{Computational reproducibility audit}
+\input{table_audit}
+
+\subsection{Comparison with the conditional-mean estimator of Sun et al.}
+\label{supp:sun}
+Full numbers for the five-regime comparison of Section~\ref{sec:suncmp}.
+Table~\ref{tab:cmp-beta} reports distributional-effect recovery and scalar-slope
+variability (with the oracle-$\alpha$ decomposition discussed in the main text);
+Table~\ref{tab:cmp-contrast} the mean-contrast IMSE for Sun-basic, the stratified
+Sun-S extension, and the two quantile reconstructions Q-LN and Q-INT, with paired
+Monte-Carlo standard errors; Table~\ref{tab:cmp-surface} the conditional-mean
+surface and Sun bandwidth sensitivity; and Table~\ref{tab:cmp-heavy} the
+heavy-tail (DGP5) robustness diagnostics.
+\input{table_compare2}
+
+% ============================================================================
+\section{Additional application details}\label{supp:app}
+
+\paragraph{Synthetic cohort.} The illustrative analysis of Section~\ref{sec:app}
+uses a synthetic cohort generated to match the ADNI sampling design: covariates are
+a binary \emph{APOE4} carrier indicator and sex; onset (amyloid positivity) is
+Cox--Weibull; competing death is Weibull; entry is staggered with left truncation;
+loss to follow-up is independent given $(A,\X)$; visits are noninformative. The
+log-marker is generated with a covariate effect that varies across quantile levels
+so that the carrier effect $\beta_{\tau,1}$ is non-flat in $\tau$, illustrating a
+distributional (not pure-location) effect. \emph{These are not real ADNI data and
+the figures are for illustration of the deliverables only; the substantive ADNI
+analysis is in preparation.}
+
+\paragraph{Estimable region and masks.} Quantile surfaces are reported on the
+interior region where the visit occupation density is bounded away from zero; grid
+cells with fewer than a minimum number of nearby complete-event visits are masked.
+
+\paragraph{Sensitivity.} For the real-data analysis we will report sensitivity to
+(i) the weighting (CC default vs.\ IPCW design-standardization), (ii) the
+inferential route (A-CV with subject bootstrap vs.\ B-OS-CF), and (iii) crossing
+(rearrangement of predicted curves), following the same protocol validated in
+Section~\ref{supp:sims}.
+
+\end{document}

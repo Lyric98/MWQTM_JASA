@@ -1,0 +1,28 @@
+\begin{table}[t]\centering\small
+\caption{Frequency of the CV-selected spline complexity $\widehat J\in\{3,4,5\}$ (the A-CV tuning), by Scenario, $n$, and $\tau$ ($R=500$ per cell). Here $\widehat J$ is the per-margin \texttt{df}~$=$~degree~$+$~(interior knots), so $\widehat J{=}3$ is a genuine \emph{cubic} with \emph{zero} interior knots ($4$ B-spline functions/margin, $16$ tensor functions), not a low-degree fit; the adaptive choice is the number of interior knots (defined in the reproducibility specification). \textbf{The selection concentrates on the grid minimum $\widehat J=3$} ($81$--$86\%$), with $P(\widehat J{=}4)\approx0.10$--$0.15$ and $P(\widehat J{=}5)\approx0.02$--$0.04$, and is nearly invariant in $n$ and $\tau$. Two consequences: (i) A-CV is here close to a \emph{fixed} $J{=}3$ estimator, so its ``adaptive'' component is small and the A-Rich ($J{+}2$) contrast is effectively $J{=}5$ vs.\ $J{=}3$ rather than a perturbation around an interior optimum; (ii) the selection saturates at the \emph{minimum} complexity available within the cubic-spline family ($\widehat J{=}3$ is zero interior knots, which a wider $J$ grid cannot undercut), so whether a lower-degree or parametric surface would be preferred is not determined by this experiment. This tempers the adaptive-tuning rung of Table~\ref{tab:ladder}.}
+\label{tab:cvfreq}\begin{tabular}{rrr rrr r}\toprule
+Sc.&$n$&$\tau$&$P(\widehat J{=}3)$&$P(\widehat J{=}4)$&$P(\widehat J{=}5)$&mode\\\midrule
+1 & 500 & 0.25 & 0.81 & 0.15 & 0.04 & 3 \\
+1 & 500 & 0.50 & 0.84 & 0.13 & 0.03 & 3 \\
+1 & 500 & 0.75 & 0.86 & 0.12 & 0.03 & 3 \\
+\addlinespace
+1 & 1000 & 0.25 & 0.85 & 0.10 & 0.04 & 3 \\
+1 & 1000 & 0.50 & 0.83 & 0.13 & 0.04 & 3 \\
+1 & 1000 & 0.75 & 0.82 & 0.14 & 0.04 & 3 \\
+\addlinespace
+1 & 2000 & 0.25 & 0.83 & 0.14 & 0.04 & 3 \\
+1 & 2000 & 0.50 & 0.85 & 0.12 & 0.03 & 3 \\
+1 & 2000 & 0.75 & 0.82 & 0.15 & 0.03 & 3 \\
+\addlinespace
+2 & 500 & 0.25 & 0.82 & 0.14 & 0.04 & 3 \\
+2 & 500 & 0.50 & 0.85 & 0.13 & 0.02 & 3 \\
+2 & 500 & 0.75 & 0.82 & 0.14 & 0.04 & 3 \\
+\addlinespace
+2 & 1000 & 0.25 & 0.83 & 0.14 & 0.04 & 3 \\
+2 & 1000 & 0.50 & 0.84 & 0.12 & 0.04 & 3 \\
+2 & 1000 & 0.75 & 0.85 & 0.13 & 0.02 & 3 \\
+\addlinespace
+2 & 2000 & 0.25 & 0.84 & 0.11 & 0.04 & 3 \\
+2 & 2000 & 0.50 & 0.84 & 0.13 & 0.03 & 3 \\
+2 & 2000 & 0.75 & 0.86 & 0.11 & 0.03 & 3 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,663 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,natbib,hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{assumption}{Assumption}
+\theoremstyle{remark}\newtheorem{remark}{Remark}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand{\Pn}{\mathbb{P}_n}
+\newcommand{\X}{\bm{X}}
+\newcommand{\bbeta}{\bm{\beta}}
+\newcommand{\indc}[1]{\mathbf{1}\{#1\}}
+\newcommand{\given}{\,\vert\,}
+\newcommand{\binit}{\widehat\bbeta_{\rm init}}
+\newcommand{\rom}{r_{\omega}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\title{Asymptotic theory for the event-aligned conditional quantile trajectory
+estimator: observed-data transport, generic-weight identification, hierarchical
+orthogonality, the sharper remainder, and a high-level cross-fitted one-step theorem}
+\author{(supplement~I to the MWQTM draft)}
+\date{\today}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Status of this document.} This supplement is written for a
+\emph{generic} observed-event weight $\omega(T,A,\X)$, of which the default
+complete-event ($\omega\equiv1$) and the IPCW ($\omega=1/G_C$) members are
+special cases. \S\ref{sec:setup}--\S\ref{sec:orth} are \emph{complete and
+self-contained}: the observed-data transport (Lemma~\ref{lem:transport}),
+generic-weight identification (Proposition~\ref{prop:id}), the hierarchical
+Neyman orthogonality to $(m,g,f)$ for every member and the additional $G_C$
+direction for the IPCW member (Lemmas~\ref{lem:m}--\ref{lem:G}), and the bread
+symmetrization (Corollary~\ref{cor:S}). \S\ref{sec:drift} \emph{proves} the
+sharper population-drift remainder (Lemma~\ref{lem:sharp}) carrying the generic
+weight perturbation $\delta_\omega$, and Proposition~\ref{prop:bias} gives the
+product form of the projected sieve bias. \S\ref{sec:onestep} states and proves
+the \emph{high-level} cross-fitted one-step theorem (Theorem~\ref{thm:main})
+under explicit nuisance-rate conditions, with the cross-fitted $L_2$
+score-reduction lemma (Lemma~\ref{lem:score}) and the sandwich-consistency
+corollary (Corollary~\ref{cor:sandwich}). The verification that a concrete
+B-spline / quantile-spacing sieve estimator \emph{attains} the rate conditions
+assumed here is the separate task of supplement~II; we flag the boundary between
+what is proved here and what is deferred there.
+
+\section{Setup: generic observed-event weight}\label{sec:setup}
+For a subject with $\Delta^T=1$ (onset observed) write $H=(A,\X)$, $W=T-A$,
+$L_\ell=\log Y(U_\ell)$, $\varepsilon_\ell(\bbeta,m)=L_\ell-m(U_\ell,T)
+-\X^\top\bbeta$, $\psi_\tau(r)=\tau-\indc{r\le0}$, and
+$f_\ell(0)=f_{\varepsilon\given U,T,\X,D\ge T}(0\given U_\ell,T,\X)$ for the
+conditional residual density at its $\tau$-quantile. Let $\omega(T,A,\X)$ be a
+\emph{bounded, strictly positive} observed-event weight,
+\begin{equation}
+0<c_\omega\le\omega(T,A,\X)\le C_\omega<\infty,\qquad
+a_\omega=\Delta^T\,\omega(T,A,\X).
+\label{eq:omega}
+\end{equation}
+The default \emph{complete-event} (CC) member is $\omega\equiv1$; the
+\emph{IPCW} member is $\omega=1/G_C(W\given H)$, finite under censoring
+positivity $G_{C,0}\ge c_G>0$.
+
+\paragraph{Convention.} Population identities (the occupation measures, $M$,
+orthogonality, drift) are stated under the \emph{target-population} law $P_0$,
+with all selection (left-truncation retention $S$, onset-observation $\Delta^T$)
+carried \emph{inside} indicators and weights, never by conditioning on $\{S=1\}$
+(see ``Two laws'' below); the retained-sample law $P_S=P_0(\cdot\given S=1)$
+enters only when counting i.i.d.\ subjects for the empirical process. The
+selection $T\le D$ is carried by $\Delta^T$ inside $a_\omega$, so $\indc{T\le D}$
+appears explicitly only \emph{after} the censoring identity (Assumption~2 of the
+main text),
+$\E_0[\Delta^T\given Y,T,D,A,\X,N^{V,0}]=\indc{T\le D}\,G_{C,0}(W\given H)$; we
+never double-condition. Nuisances are $\eta=(m,g,f,G_C)$. The moment
+functional, valued in $\mathbb R^p$, is
+\begin{equation}
+M(\bbeta,m,g;\omega)=\E\!\Big[a_\omega\sum_{\ell}\{\X-g(U_\ell,T)\}\,
+   \psi_\tau(\varepsilon_\ell(\bbeta,m))\Big],
+\label{eq:M}
+\end{equation}
+which does \emph{not} depend on $f$. Define the population \emph{design weight}
+that arises after the censoring identity,
+\begin{equation}
+\rom \;=\; G_{C,0}(W\given H)\,\omega(T,A,\X),
+\label{eq:rom}
+\end{equation}
+so $r_{\rm CC}=G_{C,0}$ and $r_{\rm IPCW}\equiv1$. Define the scalar and vector
+\emph{visit-occupation measures} on $\{0<u<t\}$,
+\begin{align}
+\nu_{\tau,\omega}(B)&=\E\Big[\indc{T\le D}\,\rom\sum_\ell f_\ell(0)\,
+   \indc{(U_\ell,T)\in B}\Big],\label{eq:nu}\\
+\mu_{\tau,\omega}(B)&=\E\Big[\indc{T\le D}\,\rom\sum_\ell f_\ell(0)\,\X\,
+   \indc{(U_\ell,T)\in B}\Big]\in\mathbb R^p,\label{eq:mu}
+\end{align}
+and, assuming $\mu_{\tau,\omega}\ll\nu_{\tau,\omega}$ componentwise, the
+\emph{density-weighted projection}
+$g_{\tau,\omega}=d\mu_{\tau,\omega}/d\nu_{\tau,\omega}$ ($\nu_{\tau,\omega}$-a.e.).
+The information matrix and the (member-specific) influence function are
+\begin{equation}
+S_{\tau,\omega}=\E\Big[\indc{T\le D}\,\rom\sum_\ell f_\ell(0)
+   \{\X-g_{\tau,\omega}(U_\ell,T)\}^{\otimes2}\Big],\quad
+\phi^0_{i,\tau,\omega}=a_\omega\sum_\ell\{\X-g_{\tau,\omega}(U_\ell,T)\}
+   \psi_\tau(\varepsilon_{0,\ell}),
+\label{eq:Sphi}
+\end{equation}
+$\varepsilon_{0,\ell}=L_\ell-m_0(U_\ell,T)-\X^\top\bbeta_{\tau,0}$. The weight
+$\omega$ enters $g_{\tau,\omega}$, $S_{\tau,\omega}$, and $\phi^0$, so each
+member has its \emph{own} projection, bread, and efficiency; the estimand
+$\bbeta_{\tau,0}$ is common (Proposition~\ref{prop:id}).
+
+\paragraph{Estimator (fold-specific cross-fitting).} $K$-fold subject splitting;
+on the complement of fold $k$ fit \emph{all} of $\widehat m^{(-k)},\widehat
+f^{(-k)},\widehat g^{(-k)},\widehat\omega^{(-k)}$ \emph{and} an initial
+$\binit^{(-k)}$, then evaluate on fold $k$. With
+$\widehat\phi_i^{(-k)}(\bbeta)=\widehat a_i^{(-k)}\sum_\ell\{\X_i-\widehat
+g^{(-k)}(U_{i\ell},T_i)\}\psi_\tau(\varepsilon_{i\ell}(\bbeta,\widehat m^{(-k)}))$,
+$\widehat a_i^{(-k)}=\Delta_i^T\widehat\omega^{(-k)}$, and
+$\widehat S_k=\PR_{n,k}[\widehat a^{(-k)}\sum_\ell\widehat f^{(-k)}_\ell(0)
+\{\X-\widehat g^{(-k)}\}^{\otimes2}]$, the cross-fitted one-step is the
+\emph{sample-size-weighted} fold average
+\begin{equation}
+\widetilde\bbeta_{\tau,\omega}=\sum_{k=1}^K\frac{n_k}{n}\Big[\binit^{(-k)}
+   +\widehat S_k^{-1}\,\PR_{n,k}\widehat\phi^{(-k)}(\binit^{(-k)})\Big],
+\qquad K\text{ fixed},\ \min_k n_k/n\ge c_K>0,
+\label{eq:onestep}
+\end{equation}
+so $\sum_k(n_k/n)\PR_{n,k}\phi=\Pn\phi$ exactly. Every nuisance and the initial
+estimator entering fold $k$ are trained off fold $k$.
+
+\section{Observed-data transport and identification}\label{sec:orth}
+The structural model (main text \S2) specifies the conditional-quantile
+restriction on the \emph{full-data, target-population} residual,
+\begin{equation}
+\E\{\psi_\tau(\varepsilon^0(u))\given T^0=t,\X^0,D^0\ge t\}=0,
+\label{eq:struct}
+\end{equation}
+i.e.\ $m_{\tau,0}(u,t)+\X^\top\bbeta_{\tau,0}$ is the conditional $\tau$-quantile
+of $L^0(u)$ given $(T^0=t,\X^0,D^0\ge t)$. Every orthogonality and drift result
+below uses instead the \emph{observed-visit} moment
+\begin{equation}
+\E\{\psi_\tau(\varepsilon_\ell)\given U_\ell,T,\X,D\ge T,\Delta^T=1\}=0,
+\label{eq:obsmoment}
+\end{equation}
+which is not assumed but must be \emph{transported} from \eqref{eq:struct}.
+
+\paragraph{Two laws.} Let $P_0$ be the full target-population law and
+$N^{V,0}$ the pre-onset visit-counting process. We state all population identities
+under $P_0$, carrying retention/onset selection \emph{inside} indicators and
+weights rather than by conditioning on $\{S=1\}$ or on the measure-zero event
+$\{U=u\}$; the retained-sample law $P_S=P_0(\cdot\given S=1)$ is used only when
+counting i.i.d.\ subjects in the empirical process. Because $U$ is continuous,
+$P_0(U=u)=0$, so the restriction must be stated in \emph{integrated}
+(occupation/Campbell) form, matching the definition of $\nu_{\tau,\omega}$ in
+\eqref{eq:nu}.
+
+\begin{lemma}[Transport via the visit-occupation measure]\label{lem:transport}
+Assume \emph{(i)} $A\perp\{L^0(\cdot),T,D\}\given\X$; \emph{(ii)}
+$N^{V,0}\perp\{L^0(\cdot),T,D\}\given A,\X$; \emph{(iii)}
+$C\perp\{L^0(\cdot),T,D,N^{V,0}\}\given A,\X$; \emph{(iv)} positivity on the
+estimable support. Then for \emph{every} bounded measurable $a(u,t,\X)$ and the
+design weight $r_\omega$ of \eqref{eq:rom},
+\begin{equation}
+\E_0\!\Big[\indc{T\le D}\,r_\omega\!\int_0^{T}a(u,T,\X)\,
+   \psi_\tau\{\varepsilon^0(u)\}\,dN^{V,0}(u)\Big]=0,
+\label{eq:campbell}
+\end{equation}
+where $\varepsilon^0(u)=L^0(u)-m_{\tau,0}(u,T)-\X^\top\bbeta_{\tau,0}$.
+Equivalently, disintegrating against the visit-occupation measure
+$\nu_{\tau,\omega}$ of \eqref{eq:nu}, $\E_{\nu_{\tau,\omega}}[\psi_\tau(\varepsilon)
+\given U,T,\X]=0$ for $\nu_{\tau,\omega}$-a.e.\ $(u,t,\X)$. This is the
+integrated observed-visit restriction; no conditioning on $\{U=u\}$ is used.
+\end{lemma}
+\begin{proof}
+The observed weight is $a_\omega=\Delta^T\omega$ with $\omega=\omega(T,A,\X)$.
+Condition the integrand of the (pre-censoring) functional on the full vector
+$(A,\X,T,D,N^{V,0},L^0(\cdot))$, against which the visit integral is measurable;
+by independent censoring (iii), $\E_0[\Delta^T\given A,\X,T,D,N^{V,0},L^0(\cdot)]
+=\indc{T\le D}\,G_{C,0}(W\given H)$, and since $\omega$ is $(T,A,\X)$-measurable
+this turns $a_\omega$ into $\indc{T\le D}r_\omega$, giving the integrand of
+\eqref{eq:campbell}. Now condition on $(A,\X,T,D)$. By (ii) the visit measure
+$N^{V,0}$ is conditionally independent of $L^0(\cdot)$ given $(A,\X)$, so by the
+Campbell/Mecke formula the inner integral has conditional mean
+\[
+\int_0^{T}a(u,T,\X)\,\E_0\!\big[\psi_\tau\{\varepsilon^0(u)\}\given
+   A,\X,T,D\big]\,\E_0[dN^{V,0}(u)\given A,\X],
+\]
+and by (i) entry $A$ does not select the marker given $(T,D,\X)$, so
+$\E_0[\psi_\tau\{\varepsilon^0(u)\}\given A,\X,T,D]
+=\E_0[\psi_\tau\{\varepsilon^0(u)\}\given T,\X,D\ge T]$ on $\{T\le D\}$, which is
+$0$ by the structural restriction \eqref{eq:struct}. Hence the inner integral has
+conditional mean $0$, and \eqref{eq:campbell} follows by taking outer expectation.
+The disintegration statement is the Radon--Nikodym factorization of the bounded
+linear functional $a\mapsto$ \eqref{eq:campbell}'s integrand against
+$\nu_{\tau,\omega}$ (well defined by positivity (iv)); since it vanishes for every
+bounded $a$ in a determining class, $\E_{\nu_{\tau,\omega}}[\psi_\tau(\varepsilon)
+\given U,T,\X]=0$ $\nu_{\tau,\omega}$-a.e.
+\end{proof}
+
+\noindent Throughout, ``the observed-visit moment'' \eqref{eq:obsmoment} is
+shorthand for the rigorous occupation-measure identity of
+Lemma~\ref{lem:transport}; every later use is as an integral against
+$\nu_{\tau,\omega}$ or $\mu_{\tau,\omega}$, never a pointwise conditioning.
+
+\begin{proposition}[Generic-weight moment invariance]\label{prop:id}
+Under Lemma~\ref{lem:transport}, for \emph{any} bounded measurable $g$ and
+\emph{any} weight $\omega$ satisfying \eqref{eq:omega},
+$M(\bbeta_{\tau,0},m_0,g;\omega)=0$.
+\end{proposition}
+\begin{proof}
+Take $a(u,t,\X)=\{\X-g(u,t)\}$ (componentwise) in
+Lemma~\ref{lem:transport}'s identity \eqref{eq:campbell}: the visit integral of
+$\{\X-g\}\psi_\tau(\varepsilon^0)$ against $\indc{T\le D}r_\omega\,dN^{V,0}$ has
+expectation $0$, which is exactly $M(\bbeta_{\tau,0},m_0,g;\omega)$ written in
+occupation form. Hence $M=0$ regardless of $g$ and of the positive weight
+$\omega$. \emph{This is moment unbiasedness, not identification}; the $p$-vector
+$M$ cannot by itself pin down the infinite-dimensional $m$.
+\end{proof}
+
+\begin{proposition}[Identification of $(m_{\tau,0},\bbeta_{\tau,0})$]\label{prop:identif}
+Let $Q_\omega(m,\bbeta)=\E[\Delta^T\omega\sum_\ell\rho_\tau\{L_\ell-m(U_\ell,T)
+-\X^\top\bbeta\}]$ be the population weighted check-loss risk. Assume, in
+addition to Lemma~\ref{lem:transport}: the conditional residual density is
+strictly positive in a neighborhood of $0$ on the estimable support; $\X$
+contains no intercept and no deterministic function of $(u,t)$; and the
+covariate Gram $\E_{\nu_{\tau,\omega}}[\{\X-\E_{\nu}[\X\given U,T]\}^{\otimes2}]$
+is nonsingular. Then $(m_{\tau,0},\bbeta_{\tau,0})$ is the unique minimizer of
+$Q_\omega$ over the estimable support.
+\end{proposition}
+\begin{proof}
+By Knight's identity, with $d_\ell=m(U_\ell,T)-m_0(U_\ell,T)+\X^\top
+(\bbeta-\bbeta_{\tau,0})$,
+\[
+Q_\omega(m,\bbeta)-Q_\omega(m_0,\bbeta_{\tau,0})
+=\E\Big[\Delta^T\omega\sum_\ell\Big(-\psi_\tau(\varepsilon_{0,\ell})d_\ell
+   +\int_0^{d_\ell}\{F_\ell(s\given Z)-F_\ell(0\given Z)\}\,ds\Big)\Big].
+\]
+The first term has expectation $0$ by Lemma~\ref{lem:transport} (moment
+invariance applied with $a=d$). The integral is nonnegative because
+$F_\ell(\cdot\given Z)$ is nondecreasing and $\varepsilon_{0,\ell}$ has its
+$\tau$-quantile at $0$ (so $F_\ell(s)-F_\ell(0)$ has the sign of $s$); hence
+$Q_\omega(m,\bbeta)\ge Q_\omega(m_0,\bbeta_{\tau,0})$. Equality forces the
+integral to vanish, and by strict positivity of the density near $0$ this
+requires $d_\ell=0$, i.e.\ $m(U_\ell,T)+\X^\top\bbeta=m_0(U_\ell,T)
++\X^\top\bbeta_{\tau,0}$, $\nu_{\tau,\omega}$-a.e. Since $\X$ carries no intercept
+or $(u,t)$-function and the covariate Gram (after projecting out the
+$(U,T)$-measurable part) is nonsingular, the $(u,t)$-part and the $\X$-part
+separate: $m=m_0$ $\nu_{\tau,\omega}$-a.e.\ and $\bbeta=\bbeta_{\tau,0}$.
+\end{proof}
+
+\noindent Hence every member estimates the same $(m_{\tau,0},\bbeta_{\tau,0})$;
+CC ($\omega\equiv1$) and IPCW ($\omega=1/G_C$) differ only in projection,
+information, and efficiency.
+
+$D_\eta M[\cdot]$ and $D_\beta M$ below are Gateaux derivatives at
+$(\bbeta_{\tau,0},\eta_0)$; $D_\beta M=-S_{\tau,\omega}$ (Corollary~\ref{cor:S}).
+
+\begin{lemma}[Orthogonality to the surface $m$]\label{lem:m}
+For bounded measurable $h$, $D_mM[h]=-\int h\,(d\mu_{\tau,\omega}-g\,
+d\nu_{\tau,\omega})$. If $g=g_{\tau,\omega}=d\mu_{\tau,\omega}/d\nu_{\tau,\omega}$
+then $D_mM[h]=0$ for all such $h$; conversely $D_mM[h]=0$ over a class dense in
+$L_2(\nu_{\tau,\omega})$ with $\mu_{\tau,\omega}\ll\nu_{\tau,\omega}$ forces
+$g=g_{\tau,\omega}$ $\nu_{\tau,\omega}$-a.e.
+\end{lemma}
+\begin{proof}
+Perturb $m_0\mapsto m_0+sh$. By the conditional-c.d.f.\ expansion at the
+$\tau$-quantile (using Lemma~\ref{lem:transport} so the relevant law is the
+observed-visit one), $\partial_s\E[\psi_\tau(\varepsilon_\ell(\bbeta_{\tau,0},
+m_0+sh))\given U_\ell,T,\X,D\ge T]|_0=-f_\ell(0)h(U_\ell,T)$. Hence, after the
+censoring identity,
+$D_mM[h]=-\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g(U_\ell,T)\}h(U_\ell,T)]
+=-\int h\,(d\mu_{\tau,\omega}-g\,d\nu_{\tau,\omega})$. The forward and converse
+claims are the Radon--Nikodym characterization on the stated direction class.
+\end{proof}
+
+\begin{lemma}[Orthogonality to the centering $g$]\label{lem:g}
+For bounded $\mathbb R^p$-valued $k$,
+$D_gM[k]=-\E[a_\omega\sum_\ell k(U_\ell,T)\psi_\tau(\varepsilon_{0,\ell})]
+=-\E[\indc{T\le D}\rom\sum_\ell k(U_\ell,T)\E\{\psi_\tau(\varepsilon_{0,\ell})
+\given U_\ell,T,\X,D\ge T,\Delta^T=1\}]=0$, for any $g$, by Lemma~\ref{lem:transport}.
+\end{lemma}
+
+\begin{lemma}[Orthogonality to the density $f$]\label{lem:f}
+$D_fM\equiv0$, as $f$ does not appear in \eqref{eq:M}. The true
+$g_{\tau,\omega}=g_{\tau,\omega}(f)$ depends on $f$, but the total derivative
+along $f_s=f_0+sh_f$ (with $g_s=g_{\tau,\omega}(f_s)$) is
+$D_fM[h_f]+D_gM[\dot g_f]=0+0=0$ by Lemma~\ref{lem:g}. Hence $\widehat f$ enters
+no first-order term; it acts only through $\widehat g$ (second order,
+\S\ref{sec:drift}) and the bread $\widehat S$ (consistency only).
+\end{lemma}
+
+\begin{lemma}[Orthogonality to censoring $G_C$ --- IPCW member only]\label{lem:G}
+For the IPCW member $\omega=1/G_C$,
+$D_{G_C}M[h]=-\E[\indc{T\le D}\,\xi_\tau\,h(W\given H)/G_{C,0}(W\given H)]=0$,
+where $\xi_\tau=\sum_\ell\{\X-g_{\tau,\omega}\}\psi_\tau(\varepsilon_{0,\ell})$,
+by differentiating $1/G_C$, conditioning on the full data, and
+$\E[\xi_\tau\given T,A,\X,D\ge T,\{U_\ell\}]=0$ (Lemma~\ref{lem:transport}). The
+CC member does \emph{not} estimate $G_C$, so this direction is vacuous there:
+CC is \emph{three-way} orthogonal ($m,g,f$), IPCW \emph{four-way}.
+\end{lemma}
+
+\begin{corollary}[Bread symmetrization]\label{cor:S}
+$\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g_{\tau,\omega}\}g_{\tau,\omega}^\top]
+=0$, hence
+$S_{\tau,\omega}=\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g_{\tau,\omega}\}
+\X^\top]=\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g_{\tau,\omega}\}^{\otimes2}]$,
+and $D_\beta M=-S_{\tau,\omega}$.
+\end{corollary}
+\begin{proof}
+$g_{\tau,\omega}$ is $(U,T)$-measurable, so
+$\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g_{\tau,\omega}\}g_{\tau,\omega}^\top]
+=\int g_{\tau,\omega}^\top(d\mu_{\tau,\omega}-g_{\tau,\omega}\,d\nu_{\tau,\omega})
+=0$ by $g_{\tau,\omega}=d\mu_{\tau,\omega}/d\nu_{\tau,\omega}$. Subtracting from
+$\E[\cdots\{\X-g_{\tau,\omega}\}\X^\top]$ gives the two equal forms.
+\end{proof}
+
+\begin{theorem}[Hierarchical orthogonality]\label{thm:orth}
+At $(\bbeta_{\tau,0},\eta_0)$ with $g=g_{\tau,\omega}$, $D_mM=D_gM=D_fM=0$ for
+every member, and $D_{G_C}M=0$ additionally for the IPCW member; and
+$D_\beta M=-S_{\tau,\omega}$. The candidate influence function is
+$S_{\tau,\omega}^{-1}\phi^0_{i,\tau,\omega}$. This is \emph{local} orthogonality,
+not multiple robustness under union-model misspecification: an $O(1)$-misspecified
+$m_\tau\neq m_0$ breaks identification of $\bbeta_\tau$ even with
+$g_{\tau,\omega},f,G_C$ correct.
+\end{theorem}
+
+\section{Sharper population drift and projected sieve bias}\label{sec:drift}
+Write $\delta_m=m-m_0$, $\delta_g=g-g_{\tau,\omega}$,
+$\delta_\beta=\bbeta-\bbeta_{\tau,0}$, $\delta_\omega=\omega-\omega_0$, the
+residual shift $h_\ell=\delta_m(U_\ell,T)+\X^\top\delta_\beta$, and the
+$L_2(\nu_{\tau,\omega})$ sizes $r_m=\|\delta_m\|$, $r_g=\|\delta_g\|$,
+$r_\beta=\|\delta_\beta\|$ (Euclidean), $r_\omega=\|\delta_\omega\|_\infty$.
+
+\begin{assumption}[Standing boundedness for the remainder/score lemmas]\label{as:bdd}
+$\|\X\|\le C_X$, $\sup_{u,t}\|g_{\tau,\omega}(u,t)\|\le C_g$, the weights satisfy
+\eqref{eq:omega}, and with probability $\to1$ the nuisance estimates lie in a
+fixed bounded set ($\|\widehat g^{(-k)}\|_\infty\le C_g'$,
+$\|\widehat\omega^{(-k)}\|_\infty\le C_\omega$); the within-subject visit count
+obeys $\E[M_i^{2}]<\infty$ (clean version: $M_i\le \bar M$ a.s., or
+$M_i(1+\|\X_i\|)^2$ sub-exponential, used in Supplement~II). Under these the
+cross-visit sums are controlled by $\big(\sum_{\ell\le M_i}q_{i\ell}\big)^2\le
+M_i\sum_{\ell\le M_i}q_{i\ell}^2$, and $L_2(\nu_{\tau,\omega})$ and the score-law
+$L_2(P)$ are equivalent norms (bounded densities/weights), so $L_2(\nu)$ rates
+transfer to $L_2(P)$.
+\end{assumption}
+\noindent A general finite-moment alternative replaces the $L_2$ bounds by $L_4$:
+with $r_{d,4}=\{\E[\indc{T\le D}r_\omega\sum_\ell|d_\ell|^4]\}^{1/4}$ the bounds
+below hold with $r_d^2$ replaced by $r_{d,4}^2$ and an extra cluster-moment
+factor; we state the clean bounded version and flag the $L_4$ route.
+
+\begin{lemma}[Sharper population-drift bound, generic weight]\label{lem:sharp}
+Assume the conditional-quantile model, Lemma~\ref{lem:transport}, weight
+positivity \eqref{eq:omega}, the boundedness Assumption~\ref{as:bdd} (so that
+$\E[\sum_\ell\|\X-g\|h_\ell^2]\lesssim\E[\sum_\ell h_\ell^2]$ and the cross-visit
+sums are controlled), and that
+$v\mapsto f_{\varepsilon\given U,T,\X,D\ge T}(v)$ is bounded with bounded
+derivative near $0$. Then the population drift
+$R=M(\bbeta,m,g;\omega)+S_{\tau,\omega}\delta_\beta$ obeys
+\[
+|R|\le C\big[(r_g+r_\omega)(r_m+r_\beta)+(r_m+r_\beta)^2\big],
+\]
+i.e.\ the pure $r_g$, $r_g^2$, $r_\omega$, and $r_\omega r_g$ contributions are
+\emph{absent}.
+\end{lemma}
+\begin{proof}
+Split the integrand of \eqref{eq:M} by the two weight-side factors
+$\{\omega_0\text{ or }\delta_\omega\}\times\{(\X-g_{\tau,\omega})\text{ or
+}-\delta_g\}$, giving four pieces $(A)$--$(D)$ with common scalar
+$\Psi=\sum_\ell\psi_\tau(\varepsilon_{0,\ell}-h_\ell)$. After the censoring
+identity and conditioning on $(U_\ell,T,\X,D\ge T)$, the bounded-derivative
+density gives the exact conditional-c.d.f.\ expansion
+\begin{equation}
+\E[\psi_\tau(\varepsilon_{0,\ell}-h_\ell)\given U_\ell,T,\X,D\ge T]
+=-f_\ell(0)\,h_\ell+\rho_\ell,\qquad |\rho_\ell|\le C h_\ell^2.
+\label{eq:cdfexp}
+\end{equation}
+
+\emph{(A) $\omega_0(\X-g_{\tau,\omega})$.} Insert \eqref{eq:cdfexp}: the
+$\delta_m$-linear part is $D_mM[\delta_m]=0$ (Lemma~\ref{lem:m}); the
+$\delta_\beta$-linear part is $-S_{\tau,\omega}\delta_\beta$
+(Corollary~\ref{cor:S}); the remainder is $O((r_m+r_\beta)^2)$. Thus
+$(A)=-S_{\tau,\omega}\delta_\beta+O((r_m+r_\beta)^2)$.
+
+\emph{(B) $\omega_0(-\delta_g)$.} At $h=0$,
+$\E\{\psi_\tau(\varepsilon_{0,\ell})\given\cdot\}=0$
+(Lemma~\ref{lem:transport}), so the pure-$\delta_g$ term vanishes
+($D_gM[\delta_g]=0$). The remaining piece uses \eqref{eq:cdfexp}:
+$(B)=\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\delta_g h_\ell]+O(r_g(r_m+r_\beta)^2)
+=O(r_g(r_m+r_\beta))$ by Cauchy--Schwarz in $\nu_{\tau,\omega}$. \textbf{No
+$r_g$ or $r_g^2$ term} ($M$ is affine in $g$).
+
+\emph{(C) $\delta_\omega(\X-g_{\tau,\omega})$.} At $h=0$ the conditional mean is
+$0$, killing the pure-$\delta_\omega$ term. With \eqref{eq:cdfexp},
+$(C)=-\E[\indc{T\le D}G_{C,0}\delta_\omega\sum_\ell f_\ell(0)
+\{\X-g_{\tau,\omega}\}h_\ell]+O(r_\omega(r_m+r_\beta)^2)=O(r_\omega(r_m+r_\beta))$
+(this cross term need not vanish, as $g_{\tau,\omega}$ orthogonalizes against the
+$\rom$-weighted measure, not the $G_{C,0}\delta_\omega$-weighted one).
+\textbf{No pure $r_\omega$ term.}
+
+\emph{(D) $\delta_\omega(-\delta_g)$.} Both factors are perturbations; at $h=0$
+the conditional mean is $0$, so
+$(D)=\E[\indc{T\le D}G_{C,0}\delta_\omega\sum_\ell f_\ell(0)\delta_g h_\ell]+\cdots
+=O(r_\omega r_g(r_m+r_\beta))$, \emph{third order}. \textbf{The pure $r_\omega
+r_g$ term is absent}; it appears only multiplied by $h$.
+
+Summing $(A)$--$(D)$ and subtracting $M(\bbeta_{\tau,0},\eta_0)=0$
+(Proposition~\ref{prop:id}) gives $R=(B)+(C)+(D)+O((r_m+r_\beta)^2)$, hence the
+stated bound. For the CC member $\delta_\omega\equiv0$ ($r_\omega=0$); for the
+IPCW member $r_\omega\asymp\|\widehat G_C-G_{C,0}\|_\infty/c_G^2$ under positivity.
+\end{proof}
+
+\begin{proposition}[Product form of the projected sieve bias]\label{prop:bias}
+Let $\mathcal B_J$ be the tensor-spline space, $g_{\tau,\omega,J}=\argmin_{h\in
+\mathcal B_J^p}\E[\indc{T\le D}\rom\sum_\ell f_\ell(0)\|\X-h(U_\ell,T)\|^2]$ the
+finite-sieve $L_2(\nu_{\tau,\omega})$ projection of $g_{\tau,\omega}$, and
+$m_{\tau,J}=B^\top\bm\gamma_{\tau,J}$ the spline component of the
+\emph{joint-sieve pseudo-truth} $\bm\theta_n^\circ$ (Supplement~II), with residual
+$r_{\tau,J}=m_{\tau,0}-m_{\tau,J}$. (The identity below holds for any
+$(U,T)$-measurable $r_{\tau,J}$; it is the pseudo-truth approximant that enters
+the actual bias.) Then
+\[
+\E\Big[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{\X-g_{\tau,\omega,J}\}
+   r_{\tau,J}(U_\ell,T)\Big]
+=\E\Big[\indc{T\le D}\rom\sum_\ell f_\ell(0)\{g_{\tau,\omega}-g_{\tau,\omega,J}\}
+   r_{\tau,J}(U_\ell,T)\Big],
+\]
+and consequently the projected approximation bias of the one-shot joint estimator
+obeys
+\[
+|b_{K,\tau,\omega}|\le\|S_{\tau,\omega,J}^{-1}\|\;
+\|g_{\tau,\omega}-g_{\tau,\omega,J}\|_{L_2(\nu_{\tau,\omega})}\;
+\|m_{\tau,0}-m_{\tau,J}\|_{L_2(\nu_{\tau,\omega})},
+\]
+where $S_{\tau,\omega,J}$ is the finite-sieve information (its limit is
+$S_{\tau,\omega}$). The full pseudo-truth bias adds the square term of
+Remark~\ref{rem:square}.
+\end{proposition}
+\begin{proof}
+Add and subtract $g_{\tau,\omega}$ inside the left-hand integrand:
+$\{\X-g_{\tau,\omega,J}\}=\{\X-g_{\tau,\omega}\}+\{g_{\tau,\omega}
+-g_{\tau,\omega,J}\}$. The term with $\{\X-g_{\tau,\omega}\}$ tested against the
+$(U,T)$-measurable direction $r_{\tau,J}$ equals $\int r_{\tau,J}\,
+(d\mu_{\tau,\omega}-g_{\tau,\omega}\,d\nu_{\tau,\omega})=0$ by the
+Radon--Nikodym characterization of $g_{\tau,\omega}$ (Lemma~\ref{lem:m}); note
+$r_{\tau,J}$ need \emph{not} lie in $\mathcal B_J$, only be $(U,T)$-measurable.
+The stated identity follows. The bias bound is then Cauchy--Schwarz in
+$\nu_{\tau,\omega}$ on the right-hand inner product
+$\langle g_{\tau,\omega}-g_{\tau,\omega,J},r_{\tau,J}\rangle_{\nu_{\tau,\omega}}$,
+times $\|S_{\tau,\omega}^{-1}\|$ from the $\beta$-block solve and uniform
+nonsingularity of $S_{\tau,\omega}$.
+\end{proof}
+
+\begin{remark}[Full pseudo-truth bias carries an additional square term]
+\label{rem:square}
+Proposition~\ref{prop:bias} bounds the \emph{first-order} projected bias
+$b_{K,\tau,\omega}^{(1)}$. The full finite-sieve pseudo-truth offset
+$\bbeta_{\tau,J}^\circ-\bbeta_{\tau,0}$ also contains the second-order term from
+the conditional-c.d.f.\ nonlinearity \eqref{eq:cdfexp}, $O(\|r_{\tau,J}\|^2)$.
+Hence the complete bound is
+\[
+\|\bbeta_{\tau,J}^\circ-\bbeta_{\tau,0}\|\le
+C\big(\|g_{\tau,\omega}-g_{\tau,\omega,J}\|_{L_2(\nu)}\,
+\|m_{\tau,0}-m_{\tau,J}\|_{L_2(\nu)}+\|m_{\tau,0}-m_{\tau,J}\|_{L_2(\nu)}^2\big),
+\]
+so with $\|g-g_J\|=O(J^{-s_g})$, $\|m_0-m_J\|=O(J^{-s_m})$ a centered root-$n$
+one-shot A-CV limit requires \emph{both} $\sqrt n\,J^{-(s_g+s_m)}\to0$ \emph{and}
+$\sqrt n\,J^{-2s_m}\to0$. The square term must \emph{not} be dropped; it is what
+makes the one-shot A-CV requirement depend on $s_m$ separately from the product
+$s_g+s_m$.
+\end{remark}
+
+\section{High-level cross-fitted one-step theorem}\label{sec:onestep}
+We now state and prove asymptotic normality of \eqref{eq:onestep} under explicit
+nuisance-rate conditions, \emph{without} reference to any concrete sieve rate.
+The first ingredient is an $L_2(P)$ score-reduction lemma that replaces a
+Donsker condition by cross-fitting and an $L_1$-to-$L_2$ contraction special to
+the indicator score.
+
+\begin{lemma}[Cross-fitted $L_2$ score reduction]\label{lem:score}
+Fix the fold-$k$ nuisance estimates $\widehat\eta^{(-k)}$, trained off fold $k$.
+Let $d_{i\ell}=\widehat m^{(-k)}(U_{i\ell},T_i)-m_0(U_{i\ell},T_i)
++\X_i^\top(\binit^{(-k)}-\bbeta_{\tau,0})$. If
+$\|\widehat\omega^{(-k)}-\omega_0\|_\infty+\|\widehat g^{(-k)}-g_{\tau,\omega}\|
+_{L_2(\nu_{\tau,\omega})}=o_p(1)$ and the occupation-weighted mean of $|d_{i\ell}|$
+is $o_p(1)$, then $\|\widehat\phi^{(-k)}-\phi^0_{\tau,\omega}\|_{P,2}=o_p(1)$,
+and hence $\sqrt{n_k}(\PR_{n,k}-P)\{\widehat\phi^{(-k)}-\phi^0_{\tau,\omega}\}
+=o_p(1)$ conditionally on the training fold (no Donsker condition).
+\end{lemma}
+\begin{proof}
+Conditionally on the training fold, $\widehat\phi^{(-k)}$ is a fixed function and
+fold-$k$ subjects are i.i.d.; so by Chebyshev the conditional variance of
+$\sqrt{n_k}(\PR_{n,k}-P)(\widehat\phi^{(-k)}-\phi^0)$ is
+$\|\widehat\phi^{(-k)}-\phi^0\|_{P,2}^2$, and it suffices to show the latter is
+$o_p(1)$. Decompose $\widehat\phi^{(-k)}-\phi^0$ into (a) the weight/centering
+replacement $\{\widehat a^{(-k)}(\X-\widehat g^{(-k)})-a_\omega(\X-g_{\tau,\omega})\}
+\psi_\tau(\varepsilon_0)$ and (b) the score-argument change
+$\widehat a^{(-k)}(\X-\widehat g^{(-k)})\{\psi_\tau(\varepsilon_0-d)-\psi_\tau
+(\varepsilon_0)\}$. Term (a) is $O_p(r_\omega+r_g)=o_p(1)$ in $L_2(P)$ by
+boundedness of $\X,\omega,1/G_C$ and $|\psi_\tau|\le1$. For term (b), the key
+contraction is that, conditionally on the design $Z=(U_\ell,T,\X)$ and using
+$|\psi_\tau(\varepsilon_0-d)-\psi_\tau(\varepsilon_0)|
+=|\indc{\varepsilon_0\le d}-\indc{\varepsilon_0\le0}|$,
+\begin{equation}
+\E\big[\{\psi_\tau(\varepsilon_0-d)-\psi_\tau(\varepsilon_0)\}^2\given Z\big]
+=\PR\{0<\varepsilon_0\le d\given Z\}+\PR\{d<\varepsilon_0\le0\given Z\}
+\le C|d|,
+\label{eq:contraction}
+\end{equation}
+by the bounded conditional density. Term (b) is a \emph{subject} sum
+$\sum_{\ell\le M_i}q_{i\ell}$ with $q_{i\ell}=a_\omega(\X-\widehat
+g^{(-k)})\{\psi_\tau(\varepsilon_0-d)-\psi_\tau(\varepsilon_0)\}$, so its square
+has cross-visit terms; by Cauchy--Schwarz at the cluster level (Assumption~\ref{as:bdd})
+$\big(\sum_{\ell\le M_i}q_{i\ell}\big)^2\le M_i\sum_{\ell\le M_i}q_{i\ell}^2$,
+whence, taking conditional expectation with \eqref{eq:contraction} and the
+boundedness of $\X,\widehat g^{(-k)},a_\omega$,
+\[
+\|\text{term (b)}\|_{P,2}^2\le C'\,\E\Big[M_i\,a_\omega^2\sum_{\ell\le M_i}
+\|\X-\widehat g^{(-k)}\|^2\,|d_{i\ell}|\Big]=o_p(1),
+\]
+since $\E[M_i^2]<\infty$, $\X,\widehat g^{(-k)}$ are bounded, and the
+occupation-weighted mean of $|d_{i\ell}|$ is $o_p(1)$; the $L_2(\nu_{\tau,\omega})$
+consistency of $\widehat g^{(-k)}$ transfers to the score law $L_2(P)$ by the
+norm equivalence in Assumption~\ref{as:bdd}. Summing (a) and (b) gives
+$\|\widehat\phi^{(-k)}-\phi^0\|_{P,2}=o_p(1)$.
+\end{proof}
+
+\begin{theorem}[Cross-fitted one-step asymptotic normality, high-level]\label{thm:main}
+Fix $\tau\in(0,1)$ and a limiting weight $\omega_0$ satisfying \eqref{eq:omega}.
+Suppose: \emph{(C1)} the observed-data restriction \eqref{eq:obsmoment} holds
+(Lemma~\ref{lem:transport}); \emph{(C2)} $S_{\tau,\omega_0}$ is nonsingular and,
+for some $\delta>0$,
+\begin{equation}
+\E\|\phi^0_{i,\tau,\omega_0}\|^{2+\delta}<\infty;
+\label{eq:moment}
+\end{equation}
+\emph{(C3)} the conditional residual density is bounded away from $0$ and
+$\infty$ and uniformly Lipschitz near $0$; \emph{(C4)} $K$ fixed,
+$\min_k n_k/n\ge c_K>0$; \emph{(C5)} uniformly over folds, with
+$r_{d,k}^2=\E[\indc{T\le D}r_{\omega_0}\sum_\ell f_\ell(0)d_{i\ell}^2]$,
+$r_{g,k}=\|\widehat g^{(-k)}-g_{\tau,\omega_0}\|_{L_2(\nu)}$, and
+$r_{\omega,k}=\|\widehat\omega^{(-k)}-\omega_0\|_\infty$,
+\[
+r_{d,k}=o_p(1),\quad r_{g,k}+r_{\omega,k}=o_p(1),\quad
+(r_{g,k}+r_{\omega,k})r_{d,k}+r_{d,k}^2=o_p(n^{-1/2});
+\]
+\emph{(C6)} $\|\widehat\phi^{(-k)}-\phi^0\|_{P,2}=o_p(1)$
+(Lemma~\ref{lem:score}); \emph{(C7)}
+$\|\widehat S_k-S_{\tau,\omega_0}\|_{\rm op}=o_p(1)$ and
+$\|\widehat S_k-S_{\tau,\omega_0}\|_{\rm op}\,\sqrt n\,\|\binit^{(-k)}
+-\bbeta_{\tau,0}\|=o_p(1)$. Then
+\[
+\sqrt n(\widetilde\bbeta_{\tau,\omega_0}-\bbeta_{\tau,0})
+=S_{\tau,\omega_0}^{-1}\frac1{\sqrt n}\sum_{i=1}^n\phi^0_{i,\tau,\omega_0}+o_p(1)
+\;\rightsquigarrow\;\mathcal N(0,\Sigma_{\tau,\omega_0}),
+\]
+$\Sigma_{\tau,\omega_0}=S_{\tau,\omega_0}^{-1}\E(\phi^0_{i,\tau,\omega_0}
+\phi^{0\top}_{i,\tau,\omega_0})S_{\tau,\omega_0}^{-\top}$. For CC,
+$r_{\omega,k}=0$; for IPCW, $r_{\omega,k}=O_p(\|\widehat G_C-G_{C,0}\|_\infty)$.
+\end{theorem}
+\begin{proof}
+Fix fold $k$ and suppress $k$. Decompose
+$\PR_{n,k}\widehat\phi(\binit)=(\PR_{n,k}-P)\phi^0
++(\PR_{n,k}-P)(\widehat\phi-\phi^0)+P\widehat\phi(\binit)$. The middle term is
+$o_p(n^{-1/2})$ conditionally on the training fold by (C6) and
+Lemma~\ref{lem:score}. The last term is the population drift
+$P\widehat\phi(\binit)=M(\binit,\widehat m,\widehat g;\widehat\omega)$; by
+Lemma~\ref{lem:sharp},
+\[
+P\widehat\phi(\binit)=-S_{\tau,\omega_0}(\binit-\bbeta_{\tau,0})+R_k,\qquad
+|R_k|\le C[(r_{g,k}+r_{\omega,k})r_{d,k}+r_{d,k}^2]=o_p(n^{-1/2})
+\]
+by (C5). Therefore
+$\sqrt{n_k}\PR_{n,k}\widehat\phi(\binit)=\sqrt{n_k}(\PR_{n,k}-P)\phi^0
+-S_{\tau,\omega_0}\sqrt{n_k}(\binit-\bbeta_{\tau,0})+o_p(1)$. Substituting into
+the fold bracket of \eqref{eq:onestep} and replacing $\widehat S_k^{-1}$ by
+$S_{\tau,\omega_0}^{-1}$,
+\[
+\sqrt{n_k}\Big[\binit-\bbeta_{\tau,0}+\widehat S_k^{-1}\PR_{n,k}\widehat\phi
+(\binit)\Big]=S_{\tau,\omega_0}^{-1}\sqrt{n_k}(\PR_{n,k}-P)\phi^0+e_k+o_p(1),
+\]
+where the initial-estimator first-order term cancels exactly and the
+substitution error is $e_k=(\widehat S_k^{-1}-S_{\tau,\omega_0}^{-1})
+S_{\tau,\omega_0}\sqrt{n_k}(\binit-\bbeta_{\tau,0})$. By (C7) and the identity
+$\widehat S_k^{-1}-S^{-1}=-\widehat S_k^{-1}(\widehat S_k-S)S^{-1}$,
+$\|e_k\|\le\|\widehat S_k^{-1}\|\,\|\widehat S_k-S_{\tau,\omega_0}\|_{\rm op}
+\sqrt{n_k}\|\binit-\bbeta_{\tau,0}\|=o_p(1)$. Aggregating with the size weights
+and using $\sum_k(n_k/n)\PR_{n,k}=\Pn$,
+\[
+\sqrt n(\widetilde\bbeta_{\tau,\omega_0}-\bbeta_{\tau,0})
+=S_{\tau,\omega_0}^{-1}\sqrt n(\Pn-P)\phi^0+o_p(1).
+\]
+The subjects $\phi^0_{i,\tau,\omega_0}$ are i.i.d.\ under $P_S$ with mean $0$
+(Proposition~\ref{prop:id}) and finite $2+\delta$ moment (C2); the Lindeberg
+CLT and Slutsky give the stated limit. Note the quadratic remainder
+$\|\binit-\bbeta_{\tau,0}\|^2$ does not cancel, so $\binit$ must satisfy
+$\sqrt n\,r_{d}^2=o_p(1)$, which (C5) supplies; mere $o_p(1)$ consistency of
+$\binit$ is insufficient.
+\end{proof}
+
+\begin{corollary}[Cross-fitted sandwich consistency]\label{cor:sandwich}
+Let $\widehat\zeta_i=\widehat S_{k(i)}^{-1}\widehat\phi_i^{(-k(i))}
+(\binit^{(-k(i))})$, $\bar\zeta=n^{-1}\sum_i\widehat\zeta_i$, and
+$\widehat\Sigma=n^{-1}\sum_i(\widehat\zeta_i-\bar\zeta)
+(\widehat\zeta_i-\bar\zeta)^\top$. Under (C2), (C6), (C7),
+$\widehat\Sigma\to_p\Sigma_{\tau,\omega_0}$.
+\end{corollary}
+\begin{proof}
+Across folds the $\widehat\zeta_i$ are \emph{not} globally i.i.d.\ (fold-$k$
+nuisances depend on the other folds' data), so we decompose by fold:
+$\widehat\Sigma+\bar\zeta^{\otimes2}=\sum_{k=1}^K\frac{n_k}{n}\,\PR_{n,k}
+[\widehat\zeta_k^{\otimes2}]$, with $\widehat\zeta_k=\widehat S_k^{-1}
+\widehat\phi^{(-k)}$. Fix $k$ and condition on the training data (the complement
+of fold $k$): then $\widehat S_k^{-1}$ and the function $\widehat\phi^{(-k)}$ are
+\emph{fixed}, and fold-$k$ subjects are i.i.d., so by the conditional LLN
+$\PR_{n,k}[\widehat\zeta_k^{\otimes2}]-P[\widehat\zeta_k^{\otimes2}]=o_p(1)$
+(finite second moment from C2 and boundedness). Next
+$P[\widehat\zeta_k^{\otimes2}]\to_p S_{\tau,\omega_0}^{-1}\E(\phi^0\phi^{0\top})
+S_{\tau,\omega_0}^{-\top}$ because $\widehat S_k^{-1}\to_p S_{\tau,\omega_0}^{-1}$
+(C7) and $P\|\widehat\zeta_k-S_{\tau,\omega_0}^{-1}\phi^0\|^2\le
+\|\widehat S_k^{-1}\|^2\|\widehat\phi^{(-k)}-\phi^0\|_{P,2}^2
++\|\widehat S_k^{-1}-S_{\tau,\omega_0}^{-1}\|_{\rm op}^2\E\|\phi^0\|^2=o_p(1)$
+(C6, C7, C2). Aggregating over the fixed $K$ folds with $\min_k n_k/n\ge c_K$,
+and $\bar\zeta\to_p0$, gives $\widehat\Sigma\to_p\Sigma_{\tau,\omega_0}$.
+\end{proof}
+
+\section{What is deferred, and the two routes}\label{sec:routes}
+Theorem~\ref{thm:main} assumes (C5)--(C7) as \emph{high-level} rates. That a
+concrete tensor-B-spline / quantile-spacing estimator attains them---in
+particular the parametric block rate $r_d=o_p(n^{-1/4})$ and the bread
+consistency at the required order---is proved in supplement~II via a clustered
+weighted growing-sieve Bahadur representation, whose admissible window is pinned
+by a density-weighted Gram concentration that \emph{exploits the local support}
+of the tensor splines. We do not claim those empirical-process inputs here.
+
+\begin{remark}[Two routes]\label{rem:routes}
+\textbf{Route A (default point estimator + inference): the A-CV joint
+estimator} optimizes the check loss directly, forms neither $\widehat f$ nor an
+explicit $\widehat g$, and is reported with the subject bootstrap; its
+\emph{one-shot} analytic root-$n$ theory needs $\sqrt n\,b_{K,\tau,\omega}\to0$,
+controlled in product form by Proposition~\ref{prop:bias}.
+\textbf{Route B (explicit orthogonal estimator): the cross-fitted one-step
+B-OS-CF} of \eqref{eq:onestep} has the clean orthogonal score and, under
+(C5)--(C7), removes the first-order projected bias $b_{K,\tau,\omega}$ to deliver
+the limit of Theorem~\ref{thm:main}. The bootstrap propagates sampling and
+tuning variability but does \emph{not} remove a first-order sieve bias when
+$\sqrt n\,b_{K,\tau,\omega}\not\to0$; that is the role of the one-step
+correction.
+\end{remark}
+
+\begin{thebibliography}{9}
+\bibitem[Belloni et al.(2019)]{Belloni2019} Belloni, A., Chernozhukov, V.,
+Chetverikov, D., Fern\'andez-Val, I. (2019). Conditional quantile processes
+based on series or many regressors. \emph{Journal of Econometrics} 213, 4--29.
+\bibitem[Chernozhukov et al.(2018)]{Chernozhukov2018} Chernozhukov, V. et al.
+(2018). Double/debiased machine learning. \emph{Econometrics Journal} 21,
+C1--C68.
+\bibitem[He and Shi(1994)]{He1994} He, X., Shi, P. (1994). Convergence rate of
+B-spline estimators of nonparametric conditional quantile functions.
+\emph{Journal of Nonparametric Statistics} 3, 299--308.
+\bibitem[Knight(1998)]{Knight1998} Knight, K. (1998). Limiting distributions for
+$L_1$ regression estimators under general conditions. \emph{Annals of Statistics}
+26, 755--770.
+\end{thebibliography}
+\end{document}

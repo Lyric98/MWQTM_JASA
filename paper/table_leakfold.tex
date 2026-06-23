@@ -1,0 +1,18 @@
+\begin{table}[t]\centering\small
+\caption{\textbf{Controlled implementation comparison} of the duplicate-ID fold-leakage correction (CC B-OS-CF, Scenario~2; $R=250$, $B=150$). On the \emph{same} datasets and resamples the bootstrap SE is computed two ways: \emph{leaked} (the previous implementation---fold by the resampled id, so duplicate copies of a subject split across folds and one trains a nuisance the other is scored against) vs.\ \emph{clean} (fold by orig\_id, duplicates kept together). The last column is the \emph{paired} ratio $\widehat{\mathrm{SE}}_{\rm clean}/\widehat{\mathrm{SE}}_{\rm leaked}$ computed per replicate then averaged (MCSE in parentheses $=$ sd of the per-replicate ratio $/\sqrt R$). \textbf{The leak systematically tightens the bootstrap SE by $6$--$11\%$}: SER$_{\rm leaked}<1$ in nearly every cell with coverage dipping to $\approx0.93$, whereas enforcing fold discipline restores SER$_{\rm clean}\ge1$ and near-nominal coverage ($0.94$--$0.98$). This attributes most of the mild B-OS-CF conservativeness of Table~\ref{tab:estsim} to the correction; combined with the $\le0.015$ fold-\emph{randomization} contribution of Table~\ref{tab:foldsens}, it explains the bulk of the shift from underestimation to mild conservativeness, though residual overcoverage in several cells (clean SER up to $1.17$) is \emph{not} uniquely attributable to it. Per-cell coverage MCSE $\approx0.014$ ($R{=}250$), so cell-level coverage gaps ($\approx0.016$--$0.020$) should not be over-read individually.}
+\label{tab:leakfold}\begin{tabular}{rr rr r rr}\toprule
+&&\multicolumn{2}{c}{SER}&&\multicolumn{2}{c}{coverage}\\
+\cmidrule(lr){3-4}\cmidrule(lr){6-7}
+$n$&$\tau$&leaked&clean&$\tfrac{\rm clean}{\rm leaked}$&leaked&clean\\\midrule
+500 & 0.25 & 0.974 & 1.044 & 1.076(0.004) & 0.932 & 0.952 \\
+500 & 0.50 & 0.976 & 1.036 & 1.063(0.004) & 0.940 & 0.968 \\
+500 & 0.75 & 0.999 & 1.071 & 1.074(0.005) & 0.928 & 0.948 \\
+\addlinespace
+1000 & 0.25 & 0.977 & 1.075 & 1.102(0.004) & 0.956 & 0.972 \\
+1000 & 0.50 & 0.931 & 1.021 & 1.099(0.004) & 0.944 & 0.972 \\
+1000 & 0.75 & 1.033 & 1.133 & 1.098(0.004) & 0.936 & 0.952 \\
+\addlinespace
+2000 & 0.25 & 0.956 & 1.057 & 1.108(0.005) & 0.932 & 0.948 \\
+2000 & 0.50 & 0.978 & 1.068 & 1.093(0.004) & 0.932 & 0.940 \\
+2000 & 0.75 & 1.065 & 1.171 & 1.100(0.004) & 0.976 & 0.984 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,378 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,natbib,hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{condition}{Condition}
+\theoremstyle{remark}\newtheorem{remark}{Remark}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand{\Pn}{\mathbb{P}_n}
+\newcommand{\X}{\bm{X}}
+\newcommand{\bbeta}{\bm{\beta}}
+\newcommand{\bgamma}{\bm{\gamma}}
+\newcommand{\Z}{\bm{Z}}
+\newcommand{\bth}{\bm{\theta}}
+\newcommand{\indc}[1]{\mathbf{1}\{#1\}}
+\newcommand{\given}{\,\vert\,}
+\newcommand{\op}{\mathrm{op}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\title{Supplement~II: a Bahadur representation for the clustered, weighted,
+left-truncated, growing-sieve quantile regression}
+\author{(supplement~II to the MWQTM draft)}
+\date{\today}
+\begin{document}
+\maketitle
+
+\noindent\textbf{Purpose.} Supplement~I's high-level one-step theorem assumes
+nuisance-rate conditions (C5--C7 there). This note \emph{proves} that the
+first-step joint-sieve quantile-regression estimator attains them, supplying the
+parametric Bahadur representation $\widehat\bbeta_{\rm init}-\bbeta_{\tau,0}
+=S^{-1}\Pn\phi^0+b_{K}+o_p(n^{-1/2})$. The two inputs flagged ``open'' in the
+earlier draft---a clustered Knight maximal inequality and a density-weighted
+empirical-Gram concentration---are established here (Lemmas~\ref{lem:gram} and
+\ref{lem:knight}). The single technical point that makes the admissible sieve
+window non-vacuous for smoothness $s>1$ is that the tensor B-spline Gram is
+\emph{locally supported}; ignoring this forces $J_n=o(n^{1/6})$ and $s>3/2$.
+We prove the oracle-weight result and then add the estimated weight as a
+perturbation (\S\ref{sec:weights}).
+
+\section{Setup and regularity}\label{sec:setup}
+Let $O_1,\dots,O_n$ be i.i.d.\ subject-level observations under the
+retained-sample law $P_S$; within-subject measurements may be arbitrarily
+dependent. Stack $\bth=(\bgamma^\top,\bbeta^\top)^\top\in\mathbb R^{d_n}$,
+$d_n=K_n+p$, $K_n=J_n^2$, and the design vector
+$\Z_{i\ell}=(B_n(U_{i\ell},T_i)^\top,\X_i^\top)^\top$ with $B_n$ the normalized
+tensor cubic B-spline basis. For a fixed bounded positive observed-event weight
+$\omega_0$ write $a_i=\Delta_i^T\omega_0(T_i,A_i,\X_i)\in[0,C_\omega]$. The
+estimator solves the convex program
+\[
+\widehat\bth=\argmin_{\bth}\;\Pn\,q_{i,n}(\bth)+\tfrac12\bth^\top\Lambda_n\bth,
+\qquad q_{i,n}(\bth)=a_i\sum_{\ell=1}^{M_i}\rho_\tau(L_{i\ell}
+-\Z_{i\ell}^\top\bth),
+\]
+$\Lambda_n=\mathrm{diag}(\lambda_n P_n,0)$ the (optional) roughness penalty on the
+spline block. Let $\bth_n^\circ=\argmin_{\bth}Pq_{i,n}(\bth)$ be the
+\emph{population sieve pseudo-truth} (so the population score vanishes there) and
+$\varepsilon_{i\ell}=L_{i\ell}-\Z_{i\ell}^\top\bth_n^\circ$.
+
+\begin{condition}[Regularity]\label{cond:reg}
+\emph{(A1)} $O_i$ i.i.d.\ under $P_S$. \emph{(A2)} $0<c_\omega\le\omega_0\le
+C_\omega<\infty$. \emph{(A3)} the conditional density $f_{i\ell,n}$ of
+$\varepsilon_{i\ell,n}$ given the design satisfies $0<c_f\le f_{i\ell,n}(0)\le
+C_f$ and $|f_{i\ell,n}(v)-f_{i\ell,n}(0)|\le L|v|$ near $0$. \emph{(A4) (local
+support).} The normalized tensor B-splines have local support: at each $(u,t)$
+at most $q_0$ basis functions are nonzero, the overlap graph has uniformly
+bounded degree $\bar D$, and $\zeta_n:=\sup_{u,t}\|B_n(u,t)\|_2\asymp\sqrt{K_n}$.
+\emph{(A5)} the population density-weighted Gram
+$H_n=\E[a_i\sum_\ell f_{i\ell,n}(0)\Z_{i\ell}\Z_{i\ell}^\top]$ has eigenvalues in
+$[\underline c,\bar c]$, $0<\underline c\le\bar c<\infty$, uniformly in $n$.
+\emph{(A6) (cluster envelope).} $M_i(1+\|\X_i\|)^2$ is sub-exponential:
+$\|M_i(1+\|\X_i\|)^2\|_{\psi_1}\le C_M<\infty$. \emph{(A7)}
+$\|\Lambda_n\|_\op=o(1)$.
+\end{condition}
+
+\noindent Assumption (A6) is stronger than the $2{+}\delta$ moment that suffices
+for the fixed-dimensional CLT of supplement~I; it is needed for
+\emph{growing-dimensional} operator-norm concentration. A finite-moment variant
+($q$th moment, $q>4$, with envelope truncation at a slowly growing level $b_n$
+whose discarded tail is controlled by Markov) yields the same conclusions at the
+cost of an extra $b_n$ factor in the sieve-growth condition; we state the clean
+sub-exponential version and note the truncation route in Remark~\ref{rem:moment}.
+
+\section{Density-weighted Gram concentration (exploiting local support)}
+Define $\widehat H_n=\Pn[a_i\sum_\ell f_{i\ell,n}(0)\Z_{i\ell}\Z_{i\ell}^\top]$.
+\begin{lemma}[Clustered Gram concentration]\label{lem:gram}
+Under Condition~\ref{cond:reg},
+\[
+\|\widehat H_n-H_n\|_\op=O_p(\delta_{H,n}),\qquad
+\delta_{H,n}=\sqrt{\tfrac{K_n\log K_n}{n}}+\tfrac{K_n\log K_n}{n}.
+\]
+Hence if $K_n\log K_n/n\to0$ then $\|\widehat H_n-H_n\|_\op=o_p(1)$ and
+$\lambda_{\min}(\widehat H_n)\ge\underline c/2$ with probability $\to1$.
+\end{lemma}
+\begin{proof}
+Partition $\widehat H_n-H_n$ into the spline--spline, spline--covariate, and
+covariate--covariate blocks; bound the operator norm by the sum of the three
+block operator norms.
+
+\emph{Spline--spline block.} Its $(j,k)$ entry is the centered subject average of
+$Y_{i,jk}=a_i\sum_\ell f_{i\ell,n}(0)B_{j,n}(U_{i\ell},T_i)B_{k,n}(U_{i\ell},T_i)$.
+By local support (A4), $B_{j,n}B_{k,n}\equiv0$ unless supports $j,k$ overlap; the
+number of overlapping ordered pairs is $O(K_n\bar D)=O(K_n)$, and each row has at
+most $q_0\bar D=O(1)$ nonzero entries. For an overlapping pair, the normalized
+splines satisfy $|B_{j,n}|\lesssim\zeta_n\asymp\sqrt{K_n}$ on their (shared)
+support, whose probability under the design is $O(K_n^{-1})$ (since the
+occupation density is bounded, A5, and there are $K_n$ cells); together with
+boundedness of $a_i f$, the per-pair conditional second moment satisfies
+$\E[Y_{i,jk}^2]\lesssim (\zeta_n^2)^2\cdot K_n^{-1}\cdot\E[a_i^2 M_i^2]
+=O(K_n)\cdot\E[a_i^2 M_i^2]$, finite by (A6), and the envelope is
+$|Y_{i,jk}|\lesssim a_i M_i\zeta_n^2=O(M_i K_n)$. Bernstein's inequality for the
+i.i.d.\ subject sum gives, for each fixed pair,
+\[
+\PR\big(|(\Pn-P)Y_{i,jk}|>t\big)\le
+2\exp\!\Big(-\frac{c\,n t^2}{K_n+M_*K_n t}\Big),\quad M_*=\|M_i\|_{\psi_1},
+\]
+using $\mathrm{Var}(Y_{i,jk})=O(K_n)$ and the sub-exponential envelope (A6). A
+union bound over the $O(K_n)$ nonzero pairs, with $t\asymp\sqrt{K_n\log K_n/n}
++K_n\log K_n/n$, yields $\max_{(j,k):\,B_jB_k\not\equiv0}|(\Pn-P)Y_{i,jk}|
+=O_p(\delta_{H,n})$. Because the overlap graph has bounded degree (A4), the
+spline--spline block is banded with $O(1)$ nonzeros per row, so its operator norm
+is at most the maximum absolute row sum $\le q_0\bar D\cdot
+\max_{(j,k)}|(\Pn-P)Y_{i,jk}|=O_p(\delta_{H,n})$.
+
+\emph{Spline--covariate block.} It has $K_n p$ entries ($p$ fixed). The same
+per-entry Bernstein bound applies; each spline column overlaps $O(1)$ rows, so
+the block operator norm (bounded by $\sqrt{\text{(\#nonzero rows)}}\times$ max
+entry, again $O(1)$ nonzeros per spline row) is $O_p(\delta_{H,n})$, using the
+finite moments of $\X_i$ from (A6).
+
+\emph{Covariate--covariate block.} Fixed $p\times p$; a standard
+$O_p(n^{-1/2})$, dominated by $\delta_{H,n}$.
+
+Summing the three blocks gives $\|\widehat H_n-H_n\|_\op=O_p(\delta_{H,n})$.
+The eigenvalue statement follows from Weyl's inequality and (A5). Within-subject
+dependence is irrelevant: $Y_{i,jk}$ is one cluster-level summand and
+independence is used only across $i$.
+\end{proof}
+
+\section{Local Knight expansion and clustered maximal inequality}
+For $h\in\mathbb R^{d_n}$ define the per-subject Knight remainder
+\[
+\mathcal R_{i,n}(h)=a_i\sum_\ell\Big[\rho_\tau(\varepsilon_{i\ell,n}
+-\Z_{i\ell}^\top h)-\rho_\tau(\varepsilon_{i\ell,n})
++\psi_\tau(\varepsilon_{i\ell,n})\Z_{i\ell}^\top h\Big]
+=a_i\sum_\ell\int_0^{\Z_{i\ell}^\top h}\{\indc{\varepsilon_{i\ell,n}\le s}
+-\indc{\varepsilon_{i\ell,n}\le0}\}\,ds,
+\]
+the last equality being Knight's identity (no differentiability used).
+
+\begin{lemma}[Population quadratic expansion]\label{lem:popquad}
+Under Condition~\ref{cond:reg}, uniformly for $\|h\|\le r$ with $\zeta_n r=o(1)$,
+\[
+P\,\mathcal R_{i,n}(h)=\tfrac12 h^\top H_n h+O(\zeta_n\|h\|_{H_n}^2\cdot\|h\|).
+\]
+\end{lemma}
+\begin{proof}
+Condition on the full design $\mathcal Z_i$. For scalar $v=\Z_{i\ell}^\top h$,
+$\E\{\int_0^v(\indc{\varepsilon\le s}-\indc{\varepsilon\le0})ds\given\mathcal Z_i\}
+=\int_0^v\{F_{i\ell,n}(s)-F_{i\ell,n}(0)\}ds$. By the local Lipschitz density
+(A3), $F_{i\ell,n}(s)-F_{i\ell,n}(0)=f_{i\ell,n}(0)s+O(s^2)$, so the integral is
+$\tfrac12 f_{i\ell,n}(0)v^2+O(|v|^3)$. Summing over visits and weighting by
+$a_i$, the leading term is $\tfrac12 h^\top H_n h$. The cubic remainder obeys
+$\sum_\ell|\Z_{i\ell}^\top h|^3\le(\sup_\ell|\Z_{i\ell}^\top h|)\sum_\ell
+(\Z_{i\ell}^\top h)^2\le\zeta_n\|h\|\cdot\sum_\ell(\Z_{i\ell}^\top h)^2$, whose
+$a$-weighted expectation is $O(\zeta_n\|h\|\cdot\|h\|_{H_n}^2)$ by (A5). No
+within-subject independence is used (expectation is taken of the cluster sum).
+\end{proof}
+
+\begin{lemma}[Clustered Knight maximal inequality]\label{lem:knight}
+Under Condition~\ref{cond:reg}, for a deterministic $r_n\downarrow0$ with
+$\zeta_n r_n=o(1)$,
+\[
+\sup_{\|h\|\le r_n}\big|(\Pn-P)\mathcal R_{i,n}(h)\big|
+=O_p\!\Big(\sqrt{\tfrac{d_n\,\zeta_n r_n^3\,\log n}{n}}
++\tfrac{d_n\,\zeta_n r_n\,\log n}{n}\Big).
+\]
+In particular, if $r_n\asymp\sqrt{d_n/n}$ and $d_n^2(\log n)^c/n\to0$ for a
+fixed $c$, the supremum is $o_p(r_n^2)$.
+\end{lemma}
+\begin{proof}
+The class $\mathcal F_{n,r}=\{\mathcal R_{i,n}(h):\|h\|\le r_n\}$ is generated by
+the linear indices $\Z_{i\ell}^\top h$, threshold indicators, integration, and a
+finite per-subject sum; it is a VC-type class with envelope
+$F_{i}\lesssim a_i M_i\zeta_n r_n$ (since $|\mathcal R_{i,n}(h)|\le a_i\sum_\ell
+|\Z_{i\ell}^\top h|\indc{|\varepsilon_{i\ell,n}|\le|\Z_{i\ell}^\top h|}\le a_i M_i
+\zeta_n r_n$) and uniform entropy
+$\log N(\epsilon\|F\|_{P,2},\mathcal F_{n,r},L_2(P))\lesssim d_n\log(C/\epsilon)$,
+because the $h$-dependence enters through a $d_n$-dimensional linear index and
+the maps $v\mapsto\int_0^v(\indc{\varepsilon\le s}-\indc{\varepsilon\le0})ds$ are
+monotone Lipschitz of the index (a bounded-variation composition preserves the
+VC-subgraph property up to a constant). The \emph{local variance} is sharper
+than the squared envelope: since the integrand is nonzero only on
+$\{|\varepsilon_{i\ell,n}|\le|\Z_{i\ell}^\top h|\}$, whose conditional
+probability is $O(|\Z_{i\ell}^\top h|)$ by (A3),
+\[
+\sup_{\|h\|\le r_n}P\{\mathcal R_{i,n}(h)^2\}
+\lesssim\E\Big[a_i^2\Big(\sum_\ell|\Z_{i\ell}^\top h|\,
+\indc{|\varepsilon_{i\ell,n}|\le|\Z_{i\ell}^\top h|}\Big)^2\Big]
+\lesssim\zeta_n r_n^3,
+\]
+using $|\Z^\top h|\le\zeta_n r_n$ and the $a$-weighted second moment of the
+visit sum (A6). Apply a Bernstein-type maximal inequality for i.i.d.\
+subject-level summands over a VC-type class (e.g.\ the bounded-variance
+empirical-process bound of van der Vaart--Wellner, Thm.\ 2.14.1, with the local
+variance $\sigma^2\asymp\zeta_n r_n^3$ and the sub-exponential envelope (A6)
+controlling the higher-order term): the bound is
+$\lesssim\sqrt{d_n\sigma^2\log n/n}+d_n\|F\|_{\psi_1}\log n/n$, which is the
+stated rate. The two prerequisites of that inequality---finite uniform entropy
+integral and a finite (here sub-exponential) envelope---are verified above; the
+sub-exponential envelope is exactly where (A6) is used and where a mere
+$2{+}\delta$ moment would not suffice. Plugging $r_n\asymp\sqrt{d_n/n}$ gives
+$\sqrt{d_n^2\zeta_n(d_n/n)^{3/2}\log n/n}\asymp r_n^2\cdot
+\sqrt{d_n^2(\log n)/n\cdot\zeta_n/\sqrt{d_n}}$; since $\zeta_n\asymp\sqrt{K_n}
+\lesssim\sqrt{d_n}$, the bracket is $\sqrt{d_n^2\log n/n}=o(1)$ under
+$d_n^2(\log n)^c/n\to0$, so the supremum is $o_p(r_n^2)$.
+\end{proof}
+
+\section{Localization and profiled Bahadur representation}
+Let $G_n=\Pn[a_i\sum_\ell\Z_{i\ell}\psi_\tau(\varepsilon_{i\ell,n})]$; since
+$\bth_n^\circ$ is the population sieve minimizer, $PG_n=0$ and (bounded weights,
+A6) $\|G_n\|=O_p(\sqrt{d_n/n})$.
+
+\begin{lemma}[Localization]\label{lem:loc}
+Set $r_n=C\sqrt{d_n/n}$. If $\delta_{H,n}=o(1)$, $\zeta_n r_n=o(1)$, and
+Lemma~\ref{lem:knight} gives $o_p(r_n^2)$, then
+$\|\widehat\bth-\bth_n^\circ\|=O_p(r_n+\|\Lambda_n\bth_n^\circ\|)$.
+\end{lemma}
+\begin{proof}
+For $\|h\|=Mr_n$, Knight's identity and Lemma~\ref{lem:popquad} give
+$Q_n(\bth_n^\circ+h)-Q_n(\bth_n^\circ)=-h^\top G_n+\tfrac12 h^\top H_n h
++(\Pn-P)\mathcal R_{i,n}(h)+\text{penalty}$. The linear term is $O_p(r_n\|h\|)$;
+by (A5) the quadratic dominates from below, $\tfrac12 h^\top H_n h\ge
+\tfrac{\underline c}{2}\|h\|^2$; the empirical remainder is $o_p(\|h\|^2)$
+(Lemma~\ref{lem:knight}); the penalty contributes $O(\|\Lambda_n\|\,\|h\|\,
+(\|\bth_n^\circ\|+\|h\|))$, lower order by (A7). For $M$ large the objective is
+positive on $\{\|h\|=Mr_n\}$ w.p.\ $\to1$; by convexity of
+$\bth\mapsto Q_n(\bth)$ the minimizer lies inside the ball. The penalty bias adds
+$\|\Lambda_n\bth_n^\circ\|$.
+\end{proof}
+
+\begin{lemma}[Profiled Bahadur representation]\label{lem:bahadur}
+Partition $H_n=\bigl(\begin{smallmatrix}A_n&C_n\\ C_n^\top&D_n\end{smallmatrix}\bigr)$,
+$S_n=D_n-C_n^\top A_n^{-1}C_n\to S_{\tau,\omega_0}$, and define the finite-sieve
+projection $g_{\tau,\omega_0,n}(u,t)=C_n^\top A_n^{-1}B_n(u,t)$ (so
+$g_{\tau,\omega_0,n}\to g_{\tau,\omega_0}$, supplement~I). If, in addition to
+Lemmas~\ref{lem:gram}--\ref{lem:loc},
+$\delta_{H,n}\,r_n=o(n^{-1/2})$, then
+\[
+\widehat\bbeta_n-\bbeta_n^\circ=S_n^{-1}\Pn\Big[a_i\sum_\ell
+\{\X_i-g_{\tau,\omega_0,n}(U_{i\ell},T_i)\}\psi_\tau(\varepsilon_{i\ell,n})\Big]
++b_{\lambda,n}+o_p(n^{-1/2}),
+\]
+$b_{\lambda,n}$ the profiled penalty bias.
+\end{lemma}
+\begin{proof}
+The local subgradient (normal) equation reads
+$0\in-G_n+\widehat H_n(\widehat\bth-\bth_n^\circ)+\Lambda_n\widehat\bth
++R_{n,\rm sc}$, where the nonsmooth score-increment remainder $R_{n,\rm sc}$ is
+the gradient analogue of $\mathcal R_{i,n}$, namely the centered process
+$\Z_{i\ell}\{\indc{\varepsilon_{i\ell,n}\le\Z_{i\ell}^\top h}
+-\indc{\varepsilon_{i\ell,n}\le0}\}$, controlled to $o_p(n^{-1/2})$ on the
+localization ball $\|h\|\le r_n$ by the same VC-type maximal inequality as
+Lemma~\ref{lem:knight} (its gradient version, identical entropy and envelope,
+local variance now $O(\zeta_n r_n)$). Replacing the empirical curvature
+$\widehat H_n$ by $H_n$ costs
+$\|\widehat H_n-H_n\|_\op\|\widehat\bth-\bth_n^\circ\|=O_p(\delta_{H,n}r_n)
+=o_p(n^{-1/2})$ by hypothesis. Solving the two block equations, the $\bbeta$-block
+is the Schur complement
+$\widehat\bbeta_n-\bbeta_n^\circ=S_n^{-1}\{G_{\beta,n}-C_n^\top A_n^{-1}
+G_{\gamma,n}\}+b_{\lambda,n}+o_p(n^{-1/2})$, and the combination
+$G_{\beta,n}-C_n^\top A_n^{-1}G_{\gamma,n}$ equals
+$\Pn[a_i\sum_\ell\{\X_i-g_{\tau,\omega_0,n}\}\psi_\tau(\varepsilon_{i\ell,n})]$ by
+the definition of $g_{\tau,\omega_0,n}$. Nonsingularity of $A_n,S_n$ holds w.p.\
+$\to1$ by Lemma~\ref{lem:gram} and (A5).
+\end{proof}
+
+\section{From the sieve pseudo-truth to the target; estimated weights}
+\label{sec:weights}
+Adding the projected approximation bias of supplement~I,
+Proposition~2 (product form), gives
+\[
+\widehat\bbeta_n-\bbeta_{\tau,0}=S_{\tau,\omega_0}^{-1}\Pn\phi^0_{\tau,\omega_0}
++b_{K,\tau,\omega_0}+b_{\lambda,n}+o_p(n^{-1/2}),\qquad
+|b_{K,\tau,\omega_0}|\le C\,\|g-g_{n}\|_{L_2(\nu)}\,\|m_0-m_{n}\|_{L_2(\nu)}
+=O(J_n^{-(s_g+s_m)}),
+\]
+the last equality being the \emph{product} form of supplement~I, Proposition~2.
+This is exactly the parametric representation feeding supplement~I's C5: even
+the crude single-factor bound $|b_{K}|=O(J_n^{-s_m})$ gives
+$\widehat\bbeta_{\rm init}-\bbeta_{\tau,0}=O_p(n^{-1/2})+O(J_n^{-s_m})=o_p(n^{-1/4})$
+when $J_n\gg n^{1/(4s_m)}$, i.e.\ the preliminary is $o_p(n^{-1/4})$ (not root-$n$
+when $1<s_m\le2$), and supplement~I's one-step debiases $b_{K}$ to first order.
+
+\begin{remark}[Estimated weights]\label{rem:weights}
+For a cross-fitted $\widehat\omega^{(-k)}$ the Gram perturbation is
+$\|\widehat H_n(\widehat\omega)-\widehat H_n(\omega_0)\|_\op\le
+\|\widehat\omega-\omega_0\|_\infty\cdot\Pn[\Delta^T\sum_\ell f_\ell(0)
+\|\Z_{i\ell}\|^2]$, so Gram consistency is preserved when
+$\|\widehat\omega-\omega_0\|_\infty=o_p(1)$. The profiled-score weight
+perturbation splits into an empirical part, controlled conditionally by
+cross-fitting, and a population part that is $0$ at the exact conditional
+quantile and otherwise $O_p(r_\omega(r_m+r_\beta))$ by the conditional-CDF
+expansion (supplement~I, Lemma~5). For CC, $r_\omega=0$; for IPCW, censoring
+positivity converts $\|\widehat G_C-G_{C,0}\|_\infty$ into the same-order bound
+for $\|\widehat G_C^{-1}-G_{C,0}^{-1}\|_\infty$.
+\end{remark}
+
+\begin{remark}[Finite-moment variant]\label{rem:moment}
+If only a $q$th cluster-envelope moment ($q>4$) is assumed instead of (A6),
+truncate the envelope at $b_n=n^{1/q}(\log n)^2$: on $\{M_i(1+\|\X_i\|)^2\le
+b_n\}$ apply Lemmas~\ref{lem:gram} and \ref{lem:knight} with the truncated
+summands, and bound the discarded tail by Markov, $\PR(\exists i:\,
+M_i(1+\|\X_i\|)^2>b_n)\le n\,b_n^{-q}\E[\cdots]\to0$. The conclusions hold with
+$\delta_{H,n}$ and the maximal-inequality rate multiplied by $b_n/\sqrt{K_n}$,
+which only tightens the sieve-growth condition by a logarithmic-polynomial
+factor.
+\end{remark}
+
+\section{The admissible sieve window}\label{sec:window}
+For normalized tensor B-splines, $K_n=J_n^2$ and $\zeta_n\asymp\sqrt{K_n}=J_n$.
+\begin{proposition}[Non-vacuous window for $s>1$]\label{prop:window}
+Under Condition~\ref{cond:reg}, the requirement $\delta_{H,n}r_n=o(n^{-1/2})$ of
+Lemma~\ref{lem:bahadur} (with $r_n\asymp\sqrt{K_n/n}$) is implied by
+\[
+\frac{K_n^2\log K_n}{n}\to0\quad\Longleftrightarrow\quad
+\frac{J_n^4\log J_n}{n}\to0,
+\]
+and, together with $J_n^{-s}=o(n^{-1/4})$, yields the non-empty window
+\[
+n^{1/(4s)}\ll J_n\ll\Big(\frac{n}{\log n}\Big)^{1/4},
+\]
+non-empty precisely for $s>1$.
+\end{proposition}
+\begin{proof}
+$\delta_{H,n}r_n=\big(\sqrt{K_n\log K_n/n}+K_n\log K_n/n\big)\sqrt{K_n/n}$. The
+leading term is $\sqrt{K_n^2\log K_n/n^2}=(K_n/n)\sqrt{\log K_n}$, which is
+$o(n^{-1/2})$ iff $K_n\sqrt{\log K_n}=o(\sqrt n)$, i.e.\ $K_n^2\log K_n/n\to0$;
+the second term is then lower order. With $K_n=J_n^2$ this is
+$J_n^4\log J_n/n\to0$, i.e.\ $J_n\ll(n/\log n)^{1/4}$. The bias side
+$J_n^{-s}=o(n^{-1/4})$ requires $J_n\gg n^{1/(4s)}$. The window is non-empty iff
+$1/(4s)<1/4$, i.e.\ $s>1$.
+\end{proof}
+
+\begin{remark}[Local support is essential, not cosmetic]\label{rem:essential}
+If one ignores local support and bounds each normalized row crudely by
+$\|B_n\|=O(\sqrt{K_n})$, a full-matrix Bernstein bound gives
+$\|\widehat H_n-H_n\|_\op=O_p(K_n\sqrt{\log K_n/n})$, forcing
+$K_n^3\log K_n/n\to0$, i.e.\ $J_n=o(n^{1/6})$ and $s>3/2$, which is
+\emph{incompatible} with the $s>1$ window. Exploiting the bounded-overlap
+structure (A4)---$O(K_n)$ nonzero pairs and operator-norm $=$ max row sum---is
+what reduces the Gram rate to $\sqrt{K_n\log K_n/n}$ and rescues $s>1$.
+\end{remark}
+
+\section{Summary}
+Lemmas~\ref{lem:gram}--\ref{lem:bahadur} and Proposition~\ref{prop:window}
+establish, for the oracle weight $\omega_0$ and (under
+Remark~\ref{rem:weights}) the cross-fitted estimated weight, the parametric
+Bahadur representation that supplies conditions C5--C7 of supplement~I's
+Theorem~1. The only inputs are the regularity Condition~\ref{cond:reg}; the
+formerly ``open'' clustered maximal inequality and Gram concentration are proved
+here, the decisive step being the local-support Gram bound of
+Lemma~\ref{lem:gram}.
+
+\begin{thebibliography}{9}
+\bibitem[Belloni et al.(2019)]{Belloni2019} Belloni, A., Chernozhukov, V.,
+Chetverikov, D., Fern\'andez-Val, I. (2019). Conditional quantile processes
+based on series or many regressors. \emph{J.\ Econometrics} 213, 4--29.
+\bibitem[He and Shi(1994)]{He1994} He, X., Shi, P. (1994). Convergence rate of
+B-spline estimators of nonparametric conditional quantile functions.
+\emph{J.\ Nonparam.\ Statist.} 3, 299--308.
+\bibitem[Knight(1998)]{Knight1998} Knight, K. (1998). Limiting distributions for
+$L_1$ regression estimators. \emph{Ann.\ Statist.} 26, 755--770.
+\bibitem[van der Vaart and Wellner(1996)]{VW1996} van der Vaart, A.\ W.,
+Wellner, J.\ A.\ (1996). \emph{Weak Convergence and Empirical Processes}.
+Springer.
+\end{thebibliography}
+\end{document}

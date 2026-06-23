@@ -1,0 +1,30 @@
+\begin{table}[t]\centering\small
+\caption{Computational reproducibility audit, a \emph{dedicated reduced-$B$ run} ($R=300$ per cell, inner $B{=}60$; \emph{not} a summary of the headline $B{=}500$ log), $\tau\in\{.25,.5,.75\}$. Failure/fallback rates that would bias the headline numbers if silently dropped, for \emph{both} the CC and IPCW pipelines: the QR (QR-solver) and CF (B-OS-CF) failure columns are shown \emph{separately for both pipelines}; the remaining three columns---$\widehat f$-cap, $\kappa(\widehat S)$, and the inner subject-bootstrap replicate-failure rate (``boot'')---are \emph{CC-pipeline} diagnostics (the recommended estimator). \emph{Failed replicates are counted, not discarded}. We also report the bread condition-number distribution (median, $95$th pct) rather than only a permissive (and loose) $\kappa>10^8$ binary flag. \emph{Denominators}: QR and CF are over the $R{=}300$ datasets; $\widehat f$-cap over all fold--visit density estimates; boot over the $R{\times}B$ inner resamples. \textbf{The QR and B-OS-CF structural-fit failure rates are $0$ for both the CC and IPCW pipelines}, and the (CC) bootstrap-replicate failure rate is $0$ (we tabulate the CC bootstrap-failure column only, so we do \emph{not} claim an IPCW bootstrap-failure audit here); a zero-event rate at $R{=}300$ has a $95\%$ binomial upper bound of $\approx1\%$, not an exact $0$. $\kappa(\widehat S)$ stays small (median $\approx4$, $95$th pct $\le9.1$), so ill-conditioning is not a concern; the only non-zero mode is the $\widehat f$-cap ($\le1.0\%$). \emph{Scope}: base CC/IPCW pipelines at the central quartile quantiles only; the degenerate small-$n$ growing-sieve bootstrap (Table~\ref{tab:sieve}) is \emph{not} covered here and needs a separate distributional audit.}
+\label{tab:audit}\begin{tabular}{rrr rr rr rr rr}\toprule
+&&&\multicolumn{2}{c}{CC}&\multicolumn{2}{c}{IPCW}&\multicolumn{2}{c}{$\kappa(\widehat S)$}&&\\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-9}
+Sc.&$n$&$\tau$&QR&CF&QR&CF&med&$q_{95}$&$\widehat f$-cap&boot\\\midrule
+1 & 500 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 4.0 & 6.5 & 0.009 & 0.000 \\
+1 & 500 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 4.1 & 6.1 & 0.009 & 0.000 \\
+1 & 500 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 4.1 & 6.5 & 0.008 & 0.000 \\
+\addlinespace
+1 & 1000 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 4.0 & 5.2 & 0.003 & 0.000 \\
+1 & 1000 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 3.9 & 5.0 & 0.003 & 0.000 \\
+1 & 1000 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 3.9 & 5.1 & 0.003 & 0.000 \\
+\addlinespace
+1 & 2000 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 3.9 & 4.6 & 0.001 & 0.000 \\
+1 & 2000 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 3.8 & 4.4 & 0.001 & 0.000 \\
+1 & 2000 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 3.8 & 4.5 & 0.001 & 0.000 \\
+\addlinespace
+2 & 500 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 4.9 & 9.0 & 0.010 & 0.000 \\
+2 & 500 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 4.9 & 8.6 & 0.009 & 0.000 \\
+2 & 500 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 4.9 & 9.1 & 0.010 & 0.000 \\
+\addlinespace
+2 & 1000 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 4.4 & 6.5 & 0.003 & 0.000 \\
+2 & 1000 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 4.3 & 6.2 & 0.003 & 0.000 \\
+2 & 1000 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 4.4 & 6.9 & 0.004 & 0.000 \\
+\addlinespace
+2 & 2000 & 0.25 & 0.000 & 0.000 & 0.000 & 0.000 & 4.2 & 5.1 & 0.001 & 0.000 \\
+2 & 2000 & 0.50 & 0.000 & 0.000 & 0.000 & 0.000 & 4.2 & 5.2 & 0.001 & 0.000 \\
+2 & 2000 & 0.75 & 0.000 & 0.000 & 0.000 & 0.000 & 4.2 & 4.9 & 0.001 & 0.000 \\
+\bottomrule\end{tabular}\end{table}

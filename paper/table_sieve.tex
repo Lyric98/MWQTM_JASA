@@ -1,0 +1,34 @@
+\begin{table}[t]\centering\small
+\caption{Sieve asymptotic check WITH inference, CC joint-sieve with \emph{deterministic} $J$ (Scenario~2; $R=400$, coverage over $250$, $B=250$; $\tau\in\{0.1,0.5,0.9\}$). $\sqrt n\,$bias is shown with its Monte-Carlo SE; $\dagger$ marks cells where $|\sqrt n\,\mathrm{bias}|>1.96\,$MCSE (a \emph{detectable} scaled bias). SER$=\overline{\mathrm{SE}}_{\rm boot}/\mathrm{ESD}$ and the mean $95\%$ interval length disentangle the coverage behaviour. \textbf{At $n{=}500$ the \emph{growing}-sieve bootstrap is degenerate} (mean SER $5$--$8$, mean interval length $3$--$5$ vs.\ an ESD-implied length $\approx0.6$, \emph{at all three $\tau$ including the median}): a few resamples produce enormous $\widehat{\mathrm{SE}}$ that dominate the \emph{mean}, so the near-$0.95$ coverage is an artifact of rare very-long intervals, not valid inference. We therefore mark these cells $\ddagger$ \textbf{not interpretable} (n.i.). The distributional audit (Table~\ref{tab:sievedist}) shows the \emph{median} bootstrap SE is sound (equal to the exact sieve's) and the blow-up (SE up to $96$) is confined to $2/250$ datasets ($0.8\%$, with substantial binomial uncertainty); that audit does \emph{not} attribute these events to the measured Gram-rank, local-support, or onset-diversity diagnostics, and the precise numerical trigger remains \emph{unidentified} (it audits $\tau{=}0.5$; the same $n{=}500$ growing-sieve regime shows similar blow-ups at $\tau{=}0.1,0.9$, but we do not claim an identical mechanism across $\tau$). The growing sieve is a diagnostic only---the \emph{recommended} procedure uses the small fixed sieve, where this does not occur. For $n\ge2000$ the SER is well-behaved, and there the low-bias/low-coverage cells (e.g.\ growing $\tau{=}0.1$, $n{=}4000$: $\sqrt n\,$bias $0.52$, SER $0.96$, cov $0.896$) cannot be explained by the estimated bias ($b_K$) alone---the scaled bias is only $\approx0.13$ ESD---and appear to reflect studentization/SE distortion as well.}
+\label{tab:sieve}\begin{tabular}{lrr r r@{$\,\pm\,$}l r rr r}\toprule
+sieve&$\tau$&$n$&$J$&\multicolumn{2}{c}{$\sqrt n\,$bias}&$\sqrt n\,$ESD&SER&len&cov$^{\rm boot}$\\\midrule
+exact & 0.10 & 500 & 4 & 0.45$^\dagger$ & 0.18 & 3.67 & 1.00 & 0.645 & 0.924 \\
+exact & 0.10 & 1000 & 4 & 0.19 & 0.19 & 3.79 & 1.00 & 0.469 & 0.936 \\
+exact & 0.10 & 2000 & 4 & 0.05 & 0.20 & 3.92 & 0.97 & 0.331 & 0.936 \\
+exact & 0.10 & 4000 & 4 & -0.21 & 0.19 & 3.71 & 1.01 & 0.233 & 0.948 \\
+\addlinespace
+exact & 0.50 & 500 & 4 & -0.27 & 0.15 & 2.96 & 1.06 & 0.549 & 0.936 \\
+exact & 0.50 & 1000 & 4 & 0.01 & 0.15 & 2.90 & 1.06 & 0.380 & 0.956 \\
+exact & 0.50 & 2000 & 4 & -0.05 & 0.15 & 2.94 & 1.03 & 0.266 & 0.960 \\
+exact & 0.50 & 4000 & 4 & 0.17 & 0.15 & 3.08 & 0.99 & 0.189 & 0.940 \\
+\addlinespace
+exact & 0.90 & 500 & 4 & -0.26 & 0.18 & 3.67 & 1.02 & 0.658 & 0.940 \\
+exact & 0.90 & 1000 & 4 & -0.31 & 0.18 & 3.67 & 1.01 & 0.460 & 0.932 \\
+exact & 0.90 & 2000 & 4 & 0.05 & 0.20 & 3.94 & 0.95 & 0.328 & 0.944 \\
+exact & 0.90 & 4000 & 4 & -0.33 & 0.18 & 3.65 & 1.03 & 0.234 & 0.944 \\
+\addlinespace
+grow & 0.10 & 500 & 7 & 0.92$^\dagger$ & 0.18 & 3.64 & 5.22 & 3.328 & n.i.$^\ddagger$ \\
+grow & 0.10 & 1000 & 7 & 0.78$^\dagger$ & 0.18 & 3.62 & 1.03 & 0.462 & 0.952 \\
+grow & 0.10 & 2000 & 8 & 1.03$^\dagger$ & 0.20 & 3.93 & 0.96 & 0.331 & 0.944 \\
+grow & 0.10 & 4000 & 9 & 0.52$^\dagger$ & 0.20 & 3.94 & 0.96 & 0.233 & 0.896 \\
+\addlinespace
+grow & 0.50 & 500 & 7 & -0.10 & 0.15 & 3.07 & 6.66 & 3.585 & n.i.$^\ddagger$ \\
+grow & 0.50 & 1000 & 7 & 0.08 & 0.15 & 2.92 & 1.06 & 0.382 & 0.960 \\
+grow & 0.50 & 2000 & 8 & -0.07 & 0.15 & 3.08 & 1.00 & 0.269 & 0.944 \\
+grow & 0.50 & 4000 & 9 & -0.01 & 0.16 & 3.22 & 0.95 & 0.190 & 0.940 \\
+\addlinespace
+grow & 0.90 & 500 & 7 & -0.70$^\dagger$ & 0.18 & 3.67 & 7.64 & 4.911 & n.i.$^\ddagger$ \\
+grow & 0.90 & 1000 & 7 & -0.61$^\dagger$ & 0.20 & 3.94 & 0.96 & 0.467 & 0.964 \\
+grow & 0.90 & 2000 & 8 & -0.48$^\dagger$ & 0.18 & 3.54 & 1.05 & 0.325 & 0.968 \\
+grow & 0.90 & 4000 & 9 & -0.46$^\dagger$ & 0.19 & 3.81 & 0.98 & 0.232 & 0.928 \\
+\bottomrule\end{tabular}\end{table}

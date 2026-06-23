@@ -1,0 +1,14 @@
+\begin{table}[t]\centering\small
+\caption{Fold-randomization sensitivity of the CC \textbf{B-OS-CF} bootstrap (Scenario~2; $R=250$, $B=120$, $M=8$ split draws). The point estimator is the single \emph{realized} fold split (as in the headline) or the \emph{average} over $M$ splits; the bootstrap SE either redraws folds each resample (headline default) or keeps each original subject's realized fold (\emph{fixed}). SER is relative to the matching point estimator's ESD. \textbf{Redrawing folds inflates the SER by only $\approx0.01$--$0.015$ over fixing them} ($\Delta$SER $=$ SER$_{\rm redr}-$SER$_{\rm fix}$; paired MCSE in parentheses $=$ the sd of the per-replicate $\widehat{\mathrm{SE}}_{\rm redr}-\widehat{\mathrm{SE}}_{\rm fix}$ divided by the common ESD and $\sqrt R$, treating ESD as fixed); what matters is the \emph{effect size}---fold redrawing adds only $\approx0.01$--$0.015$ to the SER, a small contribution---so the bulk of the mild B-OS-CF conservativeness is the duplicate-ID fold-leakage correction (Table~\ref{tab:leakfold}), not fold randomization. The headline bootstrap \emph{redraws} folds each resample and so marginalizes over fold randomness---this is the recommended inference; the fixed-fold and repeated-split rows are \emph{sensitivity checks}. Fixed folds are marginally tighter and empirically well calibrated here (coverage $0.948$--$0.968$); averaging the point over splits lowers its ESD but, with the redrawn SE, \emph{over}-covers ($\le0.98$). Per-cell coverage MCSE $\approx0.014$ ($R{=}250$), so cell-level coverage gaps should not be over-read.}
+\label{tab:foldsens}\begin{tabular}{rr rr rr r rrr}\toprule
+&&\multicolumn{2}{c}{ESD}&\multicolumn{2}{c}{SER}&&\multicolumn{3}{c}{coverage}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}\cmidrule(lr){8-10}
+$n$&$\tau$&real&avg&fix&redr&$\Delta$SER&$\substack{\rm real\\ \rm fix}$&$\substack{\rm real\\ \rm redr}$&$\substack{\rm avg\\ \rm redr}$\\\midrule
+500 & 0.25 & 0.160 & 0.147 & 1.03 & 1.04 & 0.012(0.005) & 0.944 & 0.952 & 0.960 \\
+500 & 0.50 & 0.153 & 0.137 & 1.02 & 1.03 & 0.013(0.005) & 0.956 & 0.968 & 0.980 \\
+500 & 0.75 & 0.157 & 0.144 & 1.05 & 1.07 & 0.014(0.005) & 0.948 & 0.944 & 0.968 \\
+\addlinespace
+1000 & 0.50 & 0.109 & 0.101 & 1.00 & 1.01 & 0.013(0.005) & 0.968 & 0.964 & 0.976 \\
+\addlinespace
+2000 & 0.50 & 0.073 & 0.068 & 1.05 & 1.07 & 0.016(0.005) & 0.948 & 0.948 & 0.952 \\
+\bottomrule\end{tabular}\end{table}

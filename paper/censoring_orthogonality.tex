@@ -1,0 +1,117 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,bm,hyperref}
+\newtheorem{lemma}{Lemma}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\PR}{\mathbb{P}}
+\newcommand{\X}{\bm{X}}
+\newcommand{\bbeta}{\bm{\beta}}
+\newcommand{\indc}[1]{\mathbf{1}\{#1\}}
+\newcommand{\given}{\,\vert\,}
+\title{Neyman-orthogonality of the IPW quantile score to the censoring nuisance:\\
+the first-order correction $\chi^C$ vanishes}
+\author{(working note for the MWQTM project)}
+\date{\today}
+\begin{document}
+\maketitle
+
+\paragraph{Summary / correction.} An earlier note claimed that plugging in an
+estimated censoring distribution $\widehat G_C$ adds a nonzero first-order term
+$\chi^C$ to the influence function of $\widehat\bbeta_\tau$. \textbf{That claim
+was wrong.} The IPW estimating function built from a \emph{conditional}-quantile
+restriction is Neyman-orthogonal to the censoring nuisance, so $\chi^C=0$ at
+first order; $\widehat G_C$ enters only through a second-order nuisance-product
+remainder. This note proves the orthogonality and explains exactly where the
+earlier derivation stopped one step too early. The simulation corroborates it:
+the frozen-$G_C$ and full-refit bootstraps coincide.
+
+\section{Setup}
+With $H=(A,\X)$, $W=T-A$, $G_{C,0}(w\given H)=\PR(C\ge w\given H)$,
+$\Delta^T=\indc{T\le D,\,C\ge W}$, $\psi_\tau(r)=\tau-\indc{r\le0}$,
+$\varepsilon_{i\ell,\tau}=L_{i\ell}-m_{\tau,0}(U_{i\ell},T_i)-\bbeta_{\tau,0}^\top\X_i$,
+and the centered, summed score
+\[
+\xi_{i,\tau}=\sum_{\ell}\{\X_i-g_{\tau,0}(U_{i\ell},T_i)\}\,
+   \psi_\tau(\varepsilon_{i\ell,\tau}),
+\]
+the IPW population moment is
+$\Psi(G_C)=\E[\,(\Delta^T/G_C(W\given H))\,\xi_\tau\,]$. We maintain (i) the
+conditional-quantile model
+$\E[\psi_\tau(\varepsilon_{i\ell,\tau})\given U_{i\ell},T_i,\X_i,D_i\ge T_i]=0$,
+(ii) independent censoring $C\perp\{Y(\cdot),T,D\}\given H$, and (iii)
+noninformative visits.
+
+\section{The vanishing of the path derivative}
+Perturb $G_{C,\epsilon}=G_{C,0}+\epsilon h$. Differentiating the weight
+$1/G_C$,
+\begin{equation}
+\dot\Psi_{G_C}[h]
+=-\,\E\!\left[\Delta^T\,\xi_\tau\,
+   \frac{h(W\given H)}{G_{C,0}(W\given H)^2}\right].
+\label{eq:step1}
+\end{equation}
+\textbf{The earlier note stopped here and declared \eqref{eq:step1} nonzero.}
+Continue. Condition on the full data $(T,D,A,\X,Y,\{U_\ell\})$, under which only
+$C$ is random; by independent censoring
+$\E[\Delta^T\given\text{full data}]=\indc{T\le D}\,G_{C,0}(W\given H)$, so
+\begin{equation}
+\dot\Psi_{G_C}[h]
+=-\,\E\!\left[\indc{T\le D}\,\xi_\tau\,
+   \frac{h(W\given H)}{G_{C,0}(W\given H)}\right].
+\label{eq:step2}
+\end{equation}
+Now use the conditional-quantile restriction. Since
+$\{\X_i-g_{\tau,0}(U_{i\ell},T_i)\}$ is a function of $(\X_i,U_{i\ell},T_i)$,
+\[
+\E[\{\X_i-g_{\tau,0}(U_{i\ell},T_i)\}\psi_\tau(\varepsilon_{i\ell,\tau})
+   \given U_{i\ell},T_i,\X_i,D_i\ge T_i]=0,
+\]
+and under noninformative visits, summing over $\ell$,
+\begin{equation}
+\E[\xi_{i,\tau}\given T_i,A_i,\X_i,D_i\ge T_i,\{U_{i\ell}\}]=0.
+\label{eq:cmz}
+\end{equation}
+The factor $h(W\given H)/G_{C,0}(W\given H)$ and $\indc{T\le D}$ are measurable
+with respect to the conditioning $\sigma$-field in \eqref{eq:cmz}. By the tower
+property, \eqref{eq:step2} becomes
+\[
+\dot\Psi_{G_C}[h]
+=-\,\E\!\left[\indc{T\le D}\,\frac{h(W\given H)}{G_{C,0}(W\given H)}\,
+   \E\{\xi_\tau\given T,A,\X,D\ge T,\{U_\ell\}\}\right]=0.
+\]
+\begin{lemma}\label{lem:orth}
+Under the conditional-quantile model, independent censoring, and noninformative
+visits, $\dot\Psi_{G_C}[h]=0$ for every admissible direction $h$. Hence the
+plug-in $\widehat G_C$ contributes no first-order term:
+$\chi^C_{i,\tau}=\dot\Psi_{G_C}[\mathrm{IF}_{G_C,i}]=0$.
+\end{lemma}
+
+\section{Why ordinary IPW \emph{does} have a censoring term --- and we do not}
+For a \emph{marginal} target (e.g.\ $\E Y$ via $(\Delta/G_C)(Y-\mu)$) one has
+$\E(Y-\mu\given H)\neq0$, so \eqref{eq:step2} does not vanish and the
+propensity/censoring model enters the first-order influence function. Our score
+rests on the stronger \emph{conditional} restriction
+$\E[\psi_\tau(\varepsilon)\given U,T,\X]=0$; multiplying a conditionally
+mean-zero quantity by any weight depending only on the conditioning variables
+keeps it mean zero. IPCW here only reweights which onset subjects are seen and
+how much they count---it shifts the design measure (hence efficiency and the
+finite-sieve pseudo-true value) but not the first-order limit.
+
+\section{Consequences}
+\begin{itemize}
+\item The feasible and oracle-weight expansions share the leading influence
+function $S_\tau^{-1}\,n^{-1/2}\sum_i\phi^0_{i,\tau}$, with no $\chi^C$.
+\item $\widehat G_C$ enters only at second order, through a nuisance-product
+remainder of order $\|\widehat G_C-G_{C,0}\|\cdot\|\widehat m_\tau-m_{\tau,0}\|$
+(and likewise with $\widehat g_\tau$), controlled by cross-fitting and the
+product-rate condition.
+\item Consequently IPCW is \emph{not} required for identification: the unweighted
+complete-event score $\E[\Delta^T\xi_\tau]=\E[\indc{T\le D}G_{C,0}\,
+\E(\xi_\tau\given\cdot)]=0$ also identifies $(m_{\tau,0},\bbeta_{\tau,0})$; it is
+a design/efficiency choice.
+\item The orthogonality can fail (so $\chi^C\neq0$) if: censoring depends on the
+unobserved marker but $G_C$ conditions only on $(A,\X)$; the conditional quantile
+model is misspecified; visits are informative; the target is a marginal quantile;
+or one targets a fixed misspecified finite-sieve pseudo-parameter.
+\end{itemize}
+\end{document}

@@ -1,0 +1,28 @@
+\begin{table}[t]\centering\small
+\caption{Cross-fitted one-step \textbf{B-OS-CF} ($K=5$), CC and IPCW members. corr is the per-cell \emph{mean} signed one-step correction $\widetilde\beta_{\rm CF}-\widehat\beta_{\rm ACV}$; std is the mean of the replicate-wise standardized corrections $\frac1R\sum_r\mathrm{corr}_r/\widehat{\mathrm{SE}}_r$ (so $\mathrm{corr}$ and $\mathrm{std}$ can differ in sign). Both signed summaries are small ($|\mathrm{corr}|\le0.007$, $|\mathrm{std}|\le0.05$ in every cell), consistent with the A-CV first-order conditions already nearly annihilating the orthogonal score at $\lambda=0$. \emph{Caveat}: a signed mean near zero can mask per-replicate cancellation; the per-replicate \emph{absolute} correction and its split/one-step decomposition are in Table~\ref{tab:corr}.}
+\label{tab:bosc}\begin{tabular}{rrr rr rr}\toprule
+Sc.&$n$&$\tau$&corr$_{\rm CC}$&corr$_{\rm IPCW}$&std$_{\rm CC}$&std$_{\rm IPCW}$\\\midrule
+1 & 500 & 0.25 & 0.002 & 0.001 & 0.025 & 0.010 \\
+1 & 500 & 0.50 & 0.002 & 0.002 & 0.019 & 0.003 \\
+1 & 500 & 0.75 & -0.006 & -0.005 & -0.047 & -0.044 \\
+\addlinespace
+1 & 1000 & 0.25 & -0.000 & 0.001 & 0.006 & 0.007 \\
+1 & 1000 & 0.50 & 0.000 & -0.001 & 0.009 & 0.005 \\
+1 & 1000 & 0.75 & -0.001 & 0.001 & -0.019 & -0.004 \\
+\addlinespace
+1 & 2000 & 0.25 & 0.001 & 0.001 & 0.021 & 0.025 \\
+1 & 2000 & 0.50 & 0.000 & -0.000 & 0.008 & -0.001 \\
+1 & 2000 & 0.75 & -0.000 & 0.000 & -0.015 & 0.004 \\
+\addlinespace
+2 & 500 & 0.25 & -0.003 & -0.005 & -0.024 & -0.032 \\
+2 & 500 & 0.50 & -0.002 & -0.001 & -0.023 & -0.004 \\
+2 & 500 & 0.75 & 0.003 & 0.002 & 0.013 & -0.008 \\
+\addlinespace
+2 & 1000 & 0.25 & -0.003 & -0.004 & -0.006 & -0.044 \\
+2 & 1000 & 0.50 & 0.000 & 0.000 & 0.019 & 0.011 \\
+2 & 1000 & 0.75 & 0.001 & 0.001 & 0.002 & 0.009 \\
+\addlinespace
+2 & 2000 & 0.25 & -0.000 & 0.000 & 0.003 & 0.008 \\
+2 & 2000 & 0.50 & -0.000 & -0.000 & -0.009 & -0.008 \\
+2 & 2000 & 0.75 & 0.001 & 0.001 & 0.015 & 0.012 \\
+\bottomrule\end{tabular}\end{table}

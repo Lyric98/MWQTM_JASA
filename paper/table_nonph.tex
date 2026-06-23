@@ -1,0 +1,46 @@
+\begin{table}[t]\centering\small
+\caption{Non-proportional-hazards (log-normal AFT) onset, \textbf{IPCW--A-CV} pipeline (as in Table~\ref{tab:pilot}). Bias and bootstrap coverage of $\beta_{\tau,1}$ are broadly similar to the Cox-Weibull results of Table~\ref{tab:pilot}, supporting robustness to the onset mechanism (the method never models onset). $R=200$ for bias; coverage over a \emph{60}-replicate subset only (Monte-Carlo SE $\approx0.028$), so this is a \emph{pilot-grade} stress test --- the several $0.90$--$0.917$ cells are not distinguishable from nominal at this $R$. The $-0.050$ bias at (Sc.\ 2, $n{=}500$, $\tau{=}0.9$) has ESD $\approx0.18$ (bias MCSE $\approx0.023$), so it is $\approx2$ MCSE and not yet alarming; a CC--A-CV AFT run and a larger $R$ are deferred to the consolidated specification.}
+\label{tab:nonph}\begin{tabular}{rrr r rr}\toprule
+Sc.&$n$&$\tau$&$\beta_{\tau,1}$&bias$_{\text{ACV}}$&cov$_{\text{ACV}}^{\text{boot}}$\\\midrule
+1 & 500 & 0.100 & 0.500 & 0.003 & 0.950
+\\
+1 & 500 & 0.500 & 0.500 & -0.003 & 0.933
+\\
+1 & 500 & 0.900 & 0.500 & -0.007 & 0.933
+\\
+\addlinespace
+1 & 1000 & 0.100 & 0.500 & -0.005 & 0.917
+\\
+1 & 1000 & 0.500 & 0.500 & 0.008 & 0.917
+\\
+1 & 1000 & 0.900 & 0.500 & -0.009 & 0.983
+\\
+\addlinespace
+1 & 2000 & 0.100 & 0.500 & 0.002 & 0.950
+\\
+1 & 2000 & 0.500 & 0.500 & -0.007 & 0.983
+\\
+1 & 2000 & 0.900 & 0.500 & -0.008 & 0.967
+\\
+\addlinespace
+2 & 500 & 0.100 & -0.013 & 0.008 & 0.967
+\\
+2 & 500 & 0.500 & 0.500 & 0.008 & 0.933
+\\
+2 & 500 & 0.900 & 1.013 & -0.050 & 0.900
+\\
+\addlinespace
+2 & 1000 & 0.100 & -0.013 & 0.005 & 0.967
+\\
+2 & 1000 & 0.500 & 0.500 & -0.016 & 0.983
+\\
+2 & 1000 & 0.900 & 1.013 & -0.018 & 0.950
+\\
+\addlinespace
+2 & 2000 & 0.100 & -0.013 & 0.011 & 0.900
+\\
+2 & 2000 & 0.500 & 0.500 & 0.005 & 0.950
+\\
+2 & 2000 & 0.900 & 1.013 & -0.005 & 0.900
+\\
+\bottomrule\end{tabular}\end{table}

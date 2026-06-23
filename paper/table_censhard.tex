@@ -1,0 +1,14 @@
+\begin{table}[t]\centering\small
+\caption{Censoring-weight stress test: the $\chi^C=0$ gap under the base regime vs.\ a \emph{hard} regime (later/wider entry $+$ heavier, more covariate-dependent loss; Sc.\ 2, $\tau=0.5$, $R=400$). The hard regime lifts censoring to $\approx43\%$ with markedly heavier IPCW-weight tails ($99$th pct $\approx5$, max $\approx12$) and lower weight ESS$/n_T$ ($\approx0.79$ vs.\ $0.98$), i.e.\ closer to the positivity boundary; the Cox $\widehat G_C$ never failed. Even so, the estimated-vs-oracle gap/ESD stays small relative to the estimator ESD and decreases overall ($0.20,0.19,0.13,0.13$ at $n=500,1000,2000,4000$); we do \emph{not} claim a clean $n^{-1}$ rate---the final two sample sizes are nearly flat---only that the ratio stays small and decreases overall, which is \emph{consistent with} (but does not establish) the second-order, $\ll n^{-1/2}$ behaviour. ($\tau=0.5$ only; tail behaviour under hard weights is not probed.)}
+\label{tab:censhard}\begin{tabular}{lr rr rrrr r}\toprule
+regime&$n$&\%cens&ESS/$n_T$&$\widetilde w$&$w_{95}$&$w_{99}$&$w_{\max}$&gap/ESD\\\midrule
+base & 500 & 0.17 & 0.98 & 1.17 & 1.53 & 1.76 & 2.07 & 0.1206 \\
+base & 1000 & 0.17 & 0.98 & 1.17 & 1.53 & 1.75 & 2.14 & 0.0783 \\
+base & 2000 & 0.17 & 0.98 & 1.17 & 1.53 & 1.74 & 2.19 & 0.0621 \\
+base & 4000 & 0.17 & 0.98 & 1.17 & 1.52 & 1.73 & 2.29 & 0.0495 \\
+\addlinespace
+hard & 500 & 0.43 & 0.79 & 1.47 & 3.35 & 5.10 & 7.43 & 0.1997 \\
+hard & 1000 & 0.42 & 0.79 & 1.47 & 3.40 & 5.16 & 8.48 & 0.1925 \\
+hard & 2000 & 0.43 & 0.79 & 1.47 & 3.42 & 5.28 & 9.66 & 0.1308 \\
+hard & 4000 & 0.43 & 0.78 & 1.47 & 3.42 & 5.34 & 11.54 & 0.1297 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,16 @@
+\begin{table}[t]\centering\small
+\caption{B-OS-CF one-step correction $\widetilde\beta_{\rm CF}-\widehat\beta_{\rm ACV}$ and its \emph{decomposition} (CC, Scenario~2, $R=500$). The signed mean is near zero (cancellation), but the per-replicate \emph{absolute} correction is non-trivial (mean$|c|$ is $0.28$--$0.40$ of the A-CV ESD). Decomposing $\mathrm{corr}=c_{\rm split}+c_{\rm os}$ into the sample-splitting part $c_{\rm split}=\sum_k\tfrac{n_k}{n}\widehat\beta^{(-k)}_{\rm init}-\widehat\beta_{\rm ACV}$ and the pure one-step part $c_{\rm os}=\sum_k\tfrac{n_k}{n}\widehat S_k^{-1}\widehat U_k$: the orthogonal part \textbf{dominates} (mean$|c_{\rm os}|/$ESD $\approx0.28$--$0.40$ vs mean$|c_{\rm split}|/$ESD $\approx0.07$--$0.13$), so the adjustment is genuinely the orthogonal correction, not cross-fitting/splitting noise. Whether it reduces \emph{bias} is separate, addressed in the tail regime of Table~\ref{tab:sievetail}.}
+\label{tab:corr}\begin{tabular}{rr r rr rr}\toprule
+$n$&$\tau$&mean$|c|$&$\tfrac{|c|}{\rm ESD}$&$\tfrac{|c_{\rm os}|}{\rm ESD}$&$\tfrac{|c_{\rm split}|}{\rm ESD}$&signed mean\\\midrule
+500 & 0.25 & 0.052 & 0.37 & 0.37 & 0.12 & 0.0004 \\
+500 & 0.50 & 0.051 & 0.37 & 0.38 & 0.11 & 0.0033 \\
+500 & 0.75 & 0.056 & 0.40 & 0.40 & 0.13 & 0.0009 \\
+\addlinespace
+1000 & 0.25 & 0.033 & 0.34 & 0.34 & 0.10 & -0.0022 \\
+1000 & 0.50 & 0.032 & 0.35 & 0.35 & 0.09 & -0.0004 \\
+1000 & 0.75 & 0.035 & 0.37 & 0.37 & 0.10 & 0.0020 \\
+\addlinespace
+2000 & 0.25 & 0.022 & 0.32 & 0.32 & 0.09 & -0.0011 \\
+2000 & 0.50 & 0.019 & 0.28 & 0.28 & 0.07 & 0.0011 \\
+2000 & 0.75 & 0.020 & 0.28 & 0.28 & 0.08 & 0.0010 \\
+\bottomrule\end{tabular}\end{table}

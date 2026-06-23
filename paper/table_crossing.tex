@@ -1,0 +1,11 @@
+\begin{table}[t]\centering\small
+\caption{Quantile-crossing on a \emph{dense} $30\times30$ interior $(u,t)$ grid $\times$ $10$ covariate profiles ($\tau\in\{.1,.25,.5,.75,.9\}$, adjacent pairs; $R=300$). Crossing rates split interior/boundary; ``$\bar u/t$'' is the mean $u/t$ of crossing \emph{incidents} (small $\Rightarrow$ near the low-age boundary). The interior crossing rate is $0$ in every cell; boundary crossing rates round to $\approx0$ by $n=1000$, but at $n{=}500$ a non-trivial \emph{fraction of replicates} ($\le15\%$, Sc.~2) show \emph{some} boundary crossing with per-incident magnitude up to $0.65$---so we rearrange by default. cal$_{\rm in}$ is the in-sample $\tau$-calibration error; cal$^{\rm OOS}_{\rm vis}$/cal$^{\rm OOS}_{\rm sub}$ are the \emph{out-of-sample} errors on an \emph{independent test draw} (same DGP), \emph{visit}-weighted (mean over $\approx620$ test rows) vs.\ \emph{subject}-equal-weighted (so multi-visit subjects do not dominate). The two agree ($0.011$--$0.022$); cal$^{\rm OOS}_{\rm vis}$ is the value \emph{before} rearrangement, and rearrangement shifts it by at most $0.001$ in every cell (largest, Sc.~2 $n{=}500$: $0.0194\!\to\!0.0184$; the full before/after pair is in the released \texttt{crossing.csv}), so rearrangement does not distort out-of-sample calibration under either weighting.}
+\label{tab:crossing}\begin{tabular}{rr rr r r r r rr}\toprule
+Sc.&$n$&cr$_{\rm int}$&cr$_{\rm bnd}$&frac.\ reps&max mag&$\bar u/t$&cal$_{\rm in}$&cal$^{\rm OOS}_{\rm vis}$&cal$^{\rm OOS}_{\rm sub}$\\\midrule
+1 & 500 & 0.0000 & 0.0001 & 0.06 & 0.178 & 0.27 & 0.0017 & 0.0197 & 0.0220 \\
+1 & 1000 & 0.0000 & 0.0000 & 0.01 & 0.057 & 0.05 & 0.0011 & 0.0160 & 0.0153 \\
+1 & 2000 & 0.0000 & 0.0000 & 0.00 & 0.000 & -- & 0.0007 & 0.0127 & 0.0112 \\
+2 & 500 & 0.0000 & 0.0003 & 0.15 & 0.652 & 0.34 & 0.0018 & 0.0194 & 0.0222 \\
+2 & 1000 & 0.0000 & 0.0000 & 0.02 & 0.201 & 0.12 & 0.0011 & 0.0160 & 0.0148 \\
+2 & 2000 & 0.0000 & 0.0000 & 0.00 & 0.000 & -- & 0.0007 & 0.0122 & 0.0114 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,18 @@
+\begin{table}[t]\centering\small
+\caption{Is the data-adaptive A-CV materially different from a \emph{fixed} small sieve? (Scenario~2, CC estimator, same replicates; $R=400$, $B=200$.) Since CV selects $\widehat J{=}3$ in $80$--$86\%$ of replicates (Table~\ref{tab:cvfreq}), we put A-CV (CV-selected $\widehat J$) head-to-head with fixed $J{=}3$. \textbf{CV genuinely prefers $J{=}3$---it is not tie-breaking noise}: the normalized CV-loss gaps (gap$_J=(\mathrm{CV}(J){-}\mathrm{CV}(3))/|\mathrm{CV}(3)|$, the relative increase in held-out \emph{complete-event} (CC, $\omega{=}1$) check loss---the CC member tunes its df by CC-CV, so \emph{no} $\widehat G_C$ enters the CC pipeline) are positive (gap$_4\approx0.004$--$0.029$, $P(\text{gap}_4{>}0)\approx0.85$), shrinking with $n$. \textbf{And A-CV $\approx$ fixed $J{=}3$}: the point estimates differ by only $\overline{|\Delta|}\approx0.002$--$0.007$, with near-identical bias, ESD, and bootstrap coverage. On the \emph{surface} IMSE, however, fixed $J{=}3$ is \emph{consistently lower}---by $\approx9$--$13\%$ in the displayed cells; the paired $\overline{\Delta\mathrm{IMSE}}={}$IMSE$_{\rm ACV}-{}$IMSE$_{J3}$ (last column, MCSE in parentheses) is positive throughout, consistent with occasional overfitting when A-CV selects $J{\in}\{4,5\}$. So in these DGPs \textbf{CV mostly reproduces the fixed $J{=}3$ fit and offers little measurable gain on $\beta$}---the headline simulation therefore essentially validates a small fixed sieve. We do not claim CV equals the per-replicate oracle complexity, nor that it ``protects'' against richer fits (the average CV criterion and the majority of replicates favour the smallest candidate, but $\approx14$--$20\%$ select $J{\in}\{4,5\}$); only that its preference for $J{=}3$ is systematic, not tie-breaking noise.}
+\label{tab:fixedj}\begin{tabular}{rr r rr r rr rr r}\toprule
+&&&\multicolumn{2}{c}{CV gap}&&\multicolumn{2}{c}{coverage}&\multicolumn{2}{c}{IMSE}&\\
+\cmidrule(lr){4-5}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+$n$&$\tau$&$P(\widehat J{=}3)$&$\substack{\rm CV4\\-\rm CV3}$&$\substack{\rm CV5\\-\rm CV3}$&$\overline{|\Delta\beta|}$&A-CV&$J{=}3$&A-CV&$J{=}3$&$\Delta$IMSE\\\midrule
+500 & 0.25 & 0.81 & 0.026 & 0.074 & 0.0064 & 0.927 & 0.935 & 0.0335 & 0.0295 & 0.0040(0.0006) \\
+500 & 0.50 & 0.86 & 0.023 & 0.059 & 0.0033 & 0.950 & 0.953 & 0.0273 & 0.0249 & 0.0024(0.0004) \\
+500 & 0.75 & 0.82 & 0.026 & 0.065 & 0.0062 & 0.950 & 0.955 & 0.0334 & 0.0300 & 0.0035(0.0006) \\
+\addlinespace
+1000 & 0.25 & 0.82 & 0.011 & 0.027 & 0.0033 & 0.930 & 0.932 & 0.0160 & 0.0142 & 0.0019(0.0003) \\
+1000 & 0.50 & 0.81 & 0.009 & 0.020 & 0.0027 & 0.945 & 0.943 & 0.0138 & 0.0120 & 0.0018(0.0002) \\
+1000 & 0.75 & 0.81 & 0.012 & 0.025 & 0.0032 & 0.943 & 0.943 & 0.0153 & 0.0138 & 0.0015(0.0002) \\
+\addlinespace
+2000 & 0.25 & 0.83 & 0.005 & 0.010 & 0.0018 & 0.938 & 0.935 & 0.0078 & 0.0070 & 0.0008(0.0001) \\
+2000 & 0.50 & 0.83 & 0.004 & 0.009 & 0.0013 & 0.940 & 0.943 & 0.0063 & 0.0056 & 0.0007(0.0001) \\
+2000 & 0.75 & 0.83 & 0.005 & 0.011 & 0.0018 & 0.955 & 0.958 & 0.0077 & 0.0069 & 0.0008(0.0001) \\
+\bottomrule\end{tabular}\end{table}

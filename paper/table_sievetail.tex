@@ -1,0 +1,18 @@
+\begin{table}[t]\centering\small
+\caption{Does the one-step reduce the growing-sieve tail \emph{bias}? Deterministic growing sieve, same replicates through A-joint-sieve, cross-fitted \textbf{B-OS-CF}, and a richer-sieve A-Rich ($J{+}2$) sensitivity (CC, Sc.\ 2; $R=400$, coverage over $150$, $B=120$---a \emph{pilot-grade} inference subset, coverage MCSE $\approx0.018$; $\sqrt n\,$bias MCSE $\approx0.15$--$0.20$). At \emph{both} tails B-OS-CF consistently moves the scaled bias toward zero, increasingly with $n$ (e.g.\ $\tau{=}0.1$: $0.66{\to}0.28$, $0.53{\to}0.19$; $\tau{=}0.9$: $-0.49{\to}-0.12$ at $n{=}4000$), whereas the fixed-$(J{+}2)$ richer sieve \emph{worsens} it; paired Monte-Carlo intervals would be needed to resolve which individual moves are significant. \textbf{However}, SER and RMSE show a \emph{bias}-targeted correction only: B-OS-CF's SER $\approx0.93$--$0.97$, coverage is not improved over the deterministic A-joint-sieve (\emph{not} the CV-selected A-CV; the comparator here is the fixed growing sieve), and RMSE is essentially unchanged (the bias drop is offset by a small variance rise)---the scaled bias is already small relative to the SE here, so debiasing is a safeguard, not a coverage fix at these $n$.}
+\label{tab:sievetail}\begin{tabular}{rr r rrrr rrrr rr}\toprule
+&&& \multicolumn{4}{c}{A-joint-sieve} & \multicolumn{4}{c}{B-OS-CF} & \multicolumn{2}{c}{A-Rich}\\
+\cmidrule(lr){4-7}\cmidrule(lr){8-11}\cmidrule(lr){12-13}
+$\tau$&$n$&$J$&$\sqrt n\,$bias&SER&RMSE&cov&$\sqrt n\,$bias&SER&RMSE&cov&$\sqrt n\,$bias&cov\\\midrule
+0.10 & 1000 & 7 & 1.09 & 0.98 & 0.126 & 0.953 & 1.01 & 0.93 & 0.128 & 0.913 & 1.36 & 0.907 \\
+0.10 & 2000 & 8 & 0.66 & 0.96 & 0.088 & 0.973 & 0.28 & 0.93 & 0.089 & 0.980 & 0.91 & 0.960 \\
+0.10 & 4000 & 9 & 0.53 & 0.97 & 0.062 & 0.947 & 0.19 & 0.96 & 0.064 & 0.940 & 0.68 & 0.920 \\
+\addlinespace
+0.50 & 1000 & 7 & 0.17 & 1.03 & 0.095 & 0.947 & 0.16 & 1.02 & 0.095 & 0.940 & 0.16 & 0.953 \\
+0.50 & 2000 & 8 & -0.09 & 0.97 & 0.070 & 0.940 & -0.15 & 0.96 & 0.072 & 0.953 & -0.12 & 0.933 \\
+0.50 & 4000 & 9 & -0.13 & 1.00 & 0.048 & 0.940 & -0.08 & 0.99 & 0.050 & 0.953 & -0.14 & 0.947 \\
+\addlinespace
+0.90 & 1000 & 7 & -0.88 & 0.98 & 0.125 & 0.967 & -0.75 & 0.95 & 0.126 & 0.973 & -1.23 & 0.967 \\
+0.90 & 2000 & 8 & -0.16 & 1.02 & 0.083 & 0.947 & 0.09 & 0.95 & 0.089 & 0.927 & -0.33 & 0.940 \\
+0.90 & 4000 & 9 & -0.49 & 1.02 & 0.059 & 0.967 & -0.12 & 0.97 & 0.062 & 0.960 & -0.67 & 0.967 \\
+\bottomrule\end{tabular}\end{table}

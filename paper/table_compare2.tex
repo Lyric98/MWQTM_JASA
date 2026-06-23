@@ -1,0 +1,106 @@
+\begin{table}[t]\centering\small
+\caption{\textbf{Distributional effect recovery and scalar-slope variability (Sun's real estimator vs.\ ours).} Same Monte-Carlo datasets under Sun et al.'s survival/truncation/fixed-visit design ($R=500$; common interior domain). Sun's profile partial-likelihood slope $\widehat\beta_1$ (their compiled \texttt{marker3.cpp}) and its Monte-Carlo ESD vs.\ the ESD of our median slope $\widehat\beta_{.5,1}$, plus our $\beta_{\tau,1}$ bias at $\tau=0.1,0.5,0.9$ and the recovered tail spread $\widehat\beta_{.9}-\widehat\beta_{.1}$. \emph{Both estimators are unbiased when their target is well-defined.} In DGP1 the direct median slope has smaller Monte-Carlo variability than the feasible Sun slope for the shared scalar target ($\sim$$4\times$ smaller ESD); this is a point-estimation comparison, not an inferential-efficiency claim. An oracle-$\alpha$ decomposition shows Sun's feasible $\widehat\beta=\widehat\theta-\widehat\alpha$ (Thm.~3.1) is \emph{not} less stable because it estimates $\alpha$: the oracle-$\alpha$ version $\widehat\theta-\alpha_0$ is in fact \emph{more} variable, so the dominant variability appears to come from the profile-kernel marker score $\widehat\theta$, with $\widehat\theta-\widehat\alpha$ partly benefiting from covariance cancellation. \emph{The Sun-ESD vs.\ Q-ESD comparison is like-for-like only in DGP1, where the mean and median slopes coincide ($\beta_{\rm mean}=\beta_{.5}$); in DGP2--DGP4 the scalar targets differ, and in DGP5 the conditional mean is undefined, so Sun's slope variability is reported only as a fragility diagnostic, not an efficiency comparison.} DGP2 only the quantile slope sees the covariate-driven dispersion; DGP3 no proportional slope exists; DGP4 the effect is confined to the upper tail ($\beta_{.9}\!\gg\!\beta_{.5}$) so Sun's scalar hides it; in DGP5 (heavy $t_5$ log-tail, mean ill-posed) Sun's raw ESD is unstable and non-monotone, driven by rare explosive observations, while robust spread summaries shrink with $n$ (Table~\ref{tab:cmp-heavy}) and our median slope is robust.}
+\label{tab:cmp-beta}\begin{tabular}{r rr rrr r}\toprule
+&&&\multicolumn{3}{c}{Q $\beta_{\tau,1}$ bias}&spread $\beta_{.9}{-}\beta_{.1}$\\
+\cmidrule(lr){4-6}
+$n$&Sun $\widehat\beta_1$ (ESD)&Q ESD$_{.5}$&$.10$&$.50$&$.90$&Q / true\\\midrule
+\multicolumn{7}{l}{\textbf{DGP1} proportional, homoscedastic mean}\\
+500 & 0.51\,(0.10) & 0.024 & -0.002 & -0.001 & 0.002 & 0.00/0.00\\
+1000 & 0.50\,(0.07) & 0.017 & 0.001 & 0.000 & 0.001 & 0.00/0.00\\
+2000 & 0.50\,(0.05) & 0.012 & 0.001 & 0.001 & 0.001 & 0.00/0.00\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP2} proportional mean, dispersion varies}\\
+500 & 0.50\,(0.15) & 0.088 & 0.008 & -0.003 & -0.019 & 1.13/1.15\\
+1000 & 0.50\,(0.11) & 0.063 & 0.010 & 0.001 & -0.001 & 1.14/1.15\\
+2000 & 0.50\,(0.08) & 0.047 & 0.000 & -0.006 & -0.006 & 1.15/1.15\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP3} non-proportional mean (headline)}\\
+500 & 0.77\,(0.14) & 0.063 & 0.013 & -0.001 & -0.014 & 1.13/1.15\\
+1000 & 0.76\,(0.10) & 0.046 & 0.008 & 0.001 & -0.006 & 1.14/1.15\\
+2000 & 0.77\,(0.07) & 0.032 & 0.007 & 0.001 & -0.002 & 1.14/1.15\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP4} tail-specific effect}\\
+500 & 0.67\,(0.20) & 0.064 & 0.004 & 0.005 & -0.111 & 0.98/1.10\\
+1000 & 0.67\,(0.14) & 0.047 & -0.002 & 0.003 & -0.051 & 1.05/1.10\\
+2000 & 0.67\,(0.09) & 0.033 & 0.000 & -0.001 & -0.031 & 1.07/1.10\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP5} heavy-tailed error (mean undefined)}\\
+500 & 0.53\,(0.49) & 0.054 & 0.000 & 0.001 & 0.002 & 0.00/0.00\\
+1000 & 0.50\,(0.09) & 0.037 & 0.002 & 0.002 & 0.002 & 0.00/0.00\\
+2000 & 0.52\,(0.37) & 0.028 & -0.002 & -0.001 & 0.000 & 0.00/0.00\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{table}[t]\centering\small
+\caption{\textbf{Conditional-mean contrast --- the headline} ($\mathrm{IMSE}\times10^{3}$). Both methods target the conditional mean. Sun: the \emph{basic} proportional model ($E[Y|u,t,x]=\mu_0(u,t)e^{\beta'x}$, log-contrast $=\widehat\beta_1$, constant) and his Sec.~3.5 \emph{stratified-baseline} extension (Sun-S: his genuine estimator fit separately per $X_1$ group, giving a nonparametric $(u,t)$-varying contrast). Ours: the model-free quantile integral Q-INT ($\int_0^1 e^{Q_\tau}d\tau$) and the tail-stable retransformation Q-LN ($\widehat Q_{.5}+\tfrac12\widehat\sigma^2$). IMSE of the mean log-contrast $\Delta(u,t)$. Under non-proportionality (DGP3) $\Delta$ truly varies: Sun-basic collapses it to a pseudo-average, and the fully stratified Sun-S recovers it only at a large \emph{variance} cost (two nonparametric surfaces), so its IMSE exceeds Sun-basic and far exceeds Q (both Q reconstructions several-fold lower; the paired $\text{Q-LN}-\text{Sun-basic}$ difference is significantly negative, MCSE in parentheses). Sun-S is a fully stratified implementation and is \emph{not} intended to represent all prespecified low-dimensional interaction bases. In DGP1 the lower Q IMSE reflects the smaller Monte-Carlo variability of the direct shared scalar slope (Table~\ref{tab:cmp-beta}); in DGP2 Q-LN benefits from the log-location-scale structure, whereas the model-free Q-INT is more tail-sensitive and is \emph{not} uniformly better than Sun ($\text{Q-INT}-\text{Sun}=+2.5\times10^{-3}$ at $n{=}2000$). In \textbf{DGP4 Sun-basic is \emph{best}} (well matched to the proportional mean target). DGP5's mean is undefined ($-$).}
+\label{tab:cmp-contrast}\begin{tabular}{r rrrr rr}\toprule
+&\multicolumn{4}{c}{contrast IMSE $\times10^{3}$}&\multicolumn{2}{c}{paired $-$Sun $\times10^{3}$ (MCSE)}\\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}
+$n$&Sun&Sun-S&Q-LN&Q-INT&Q-LN&Q-INT\\\midrule
+\multicolumn{7}{l}{\textbf{DGP1} proportional, homoscedastic mean}\\
+500 & 9.445 & 93.959 & 0.360 & 0.353 & -9.084\,(0.624) & -9.092\,(0.624)\\
+1000 & 5.084 & 42.660 & 0.183 & 0.184 & -4.901\,(0.312) & -4.900\,(0.312)\\
+2000 & 2.329 & 20.742 & 0.091 & 0.091 & -2.238\,(0.151) & -2.239\,(0.151)\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP2} proportional mean, dispersion varies}\\
+500 & 22.763 & 188.000 & 8.334 & 14.944 & -14.429\,(1.434) & -7.820\,(1.558)\\
+1000 & 12.612 & 102.526 & 4.546 & 9.597 & -8.066\,(0.710) & -3.015\,(0.797)\\
+2000 & 5.853 & 59.003 & 2.306 & 8.374 & -3.547\,(0.350) & 2.522\,(0.452)\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP3} non-proportional mean (headline)}\\
+500 & 23.703 & 158.101 & 4.398 & 7.782 & -19.305\,(1.275) & -15.921\,(1.338)\\
+1000 & 14.290 & 78.095 & 2.169 & 5.104 & -12.121\,(0.580) & -9.187\,(0.634)\\
+2000 & 9.539 & 41.998 & 1.043 & 3.876 & -8.496\,(0.320) & -5.663\,(0.373)\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP4} tail-specific effect}\\
+500 & 40.235 & 239.699 & 53.970 & 27.912 & 13.734\,(3.103) & -12.323\,(2.463)\\
+1000 & 18.489 & 139.674 & 40.737 & 14.536 & 22.247\,(1.794) & -3.953\,(1.210)\\
+2000 & 8.761 & 72.335 & 36.858 & 9.927 & 28.097\,(1.239) & 1.166\,(0.695)\\
+\addlinespace
+\multicolumn{7}{l}{\textbf{DGP5} heavy-tailed error (mean undefined)}\\
+500 & -- & -- & -- & -- & --\,(--) & --\,(--)\\
+1000 & -- & -- & -- & -- & --\,(--) & --\,(--)\\
+2000 & -- & -- & -- & -- & --\,(--) & --\,(--)\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{table}[t]\centering\small
+\caption{\textbf{Conditional-mean surface and Sun bandwidth sensitivity} (log-IMSE $\times10^{3}$, $x_1{=}0$). Sun's kernel baseline $\widehat\mu_0$ at his density-reference bandwidth $h$ ($2.34\,\mathrm{sd}(A)N^{-1/6}$) and at the regression bandwidth $0.5h$, vs.\ our Q-LN and Q-INT reconstructions. Sun's surface is bandwidth-sensitive---the density rule over-smooths the steep baseline ($h$ column), and $0.5h$ roughly halves the IMSE---so the Sun-vs-Q surface gap is partly a smoothing-bandwidth effect, not a method deficiency; the bandwidth-free slope and contrast (Tables~\ref{tab:cmp-beta}--\ref{tab:cmp-contrast}) are the substantive comparisons. DGP5's mean is undefined ($-$).}
+\label{tab:cmp-surface}\begin{tabular}{rr rr rr}\toprule
+&&\multicolumn{2}{c}{Sun $\widehat\mu_0$}&\multicolumn{2}{c}{ours}\\
+\cmidrule(lr){3-4}\cmidrule(lr){5-6}
+$n$&$R$&$h$&$0.5h$&Q-LN&Q-INT\\\midrule
+\multicolumn{6}{l}{\textbf{DGP1} proportional, homoscedastic mean}\\
+500 & 500 & 31.021 & 15.380 & 1.081 & 0.967\\
+1000 & 500 & 18.505 & 8.316 & 0.695 & 0.607\\
+2000 & 500 & 10.757 & 4.509 & 0.519 & 0.442\\
+\addlinespace
+\multicolumn{6}{l}{\textbf{DGP2} proportional mean, dispersion varies}\\
+500 & 500 & 36.480 & 29.638 & 5.053 & 5.314\\
+1000 & 500 & 22.935 & 18.114 & 2.625 & 2.948\\
+2000 & 500 & 12.885 & 10.055 & 1.428 & 1.826\\
+\addlinespace
+\multicolumn{6}{l}{\textbf{DGP3} non-proportional mean (headline)}\\
+500 & 500 & 40.442 & 30.410 & 2.400 & 2.411\\
+1000 & 500 & 24.352 & 17.015 & 1.217 & 1.293\\
+2000 & 500 & 15.570 & 10.565 & 0.754 & 0.848\\
+\addlinespace
+\multicolumn{6}{l}{\textbf{DGP4} tail-specific effect}\\
+500 & 500 & 43.106 & 39.571 & 4.737 & 4.582\\
+1000 & 500 & 26.898 & 24.246 & 2.388 & 2.566\\
+2000 & 500 & 15.794 & 13.366 & 1.305 & 1.482\\
+\addlinespace
+\multicolumn{6}{l}{\textbf{DGP5} heavy-tailed error (mean undefined)}\\
+500 & 500 & -- & -- & -- & --\\
+1000 & 500 & -- & -- & -- & --\\
+2000 & 500 & -- & -- & -- & --\\
+\bottomrule\end{tabular}\end{table}
+
+\begin{table}[t]\centering\small
+\caption{\textbf{DGP5 heavy-tail robustness diagnostics} (Student-$t_5$ log-error; true location shift $\beta_1=0.5$). Sun's mean-slope sampling distribution over $R=500$ replicates vs.\ our median slope. The ordinary ESD is large and non-monotone in $n$, but the median, IQR, $95$th percentile, and $3$-IQR-trimmed ESD (tESD) are small and \emph{shrink} with $n$: the inflated ESD is driven by a few replicates with an extreme maximum marker (the $t_5$ log-tail produces markers exceeding $10^4$ in rare replicates), not a coding artifact. Our median slope is unbiased with a small, shrinking ESD throughout. This is an estimand-validity illustration: the conditional mean (Sun's target) is undefined under a $t_5$ log-tail, so it is not a fair mean-estimation contest.}
+\label{tab:cmp-heavy}\begin{tabular}{r rr rrrr r}\toprule
+&\multicolumn{2}{c}{Sun $\widehat\beta_1$}&\multicolumn{4}{c}{Sun $\widehat\beta_1$ robust spread}&\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-7}
+$n$&mean&ESD&med&IQR&$q_{.95}$&tESD&Q ESD$_{.5}$\\\midrule
+500 & 0.53 & 0.49 & 0.51 & 0.15 & 0.69 & 0.12 & 0.054\\
+1000 & 0.50 & 0.09 & 0.50 & 0.11 & 0.63 & 0.08 & 0.037\\
+2000 & 0.52 & 0.37 & 0.50 & 0.08 & 0.60 & 0.06 & 0.028\\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,30 @@
+\begin{table}[t]\centering\small
+\caption{Headline estimator comparison on a \emph{single} paired experiment ($R=1000$; bootstrap coverage over a $500$-replicate subset, $B=500$ full-refit resamples; MC SE $\approx0.010$). Four estimators on the same replicates: complete-event (CC, $\omega=1$) and IPCW ($\omega=1/\widehat G_C$), each as the joint-sieve A-CV point estimator and the cross-fitted one-step \textbf{B-OS-CF} ($K=5$ folds). All coverages are full-refit subject bootstrap.}
+\label{tab:estsim}\begin{tabular}{rrr r rrrr rrrr}\toprule
+&&&& \multicolumn{4}{c}{bias} & \multicolumn{4}{c}{bootstrap coverage}\\
+\cmidrule(lr){5-8}\cmidrule(lr){9-12}
+Sc.&$n$&$\tau$&$\beta_{\tau,1}$& \tiny CC-ACV & \tiny IP-ACV & \tiny CC-CF & \tiny IP-CF & \tiny CC-ACV & \tiny IP-ACV & \tiny CC-CF & \tiny IP-CF\\\midrule
+1 & 500 & 0.25 & 0.500 & -0.002 & -0.002 & 0.000 & -0.000 & 0.960 & 0.958 & 0.970 & 0.968 \\
+1 & 500 & 0.50 & 0.500 & -0.000 & 0.001 & 0.002 & 0.002 & 0.968 & 0.962 & 0.984 & 0.968 \\
+1 & 500 & 0.75 & 0.500 & -0.002 & -0.003 & -0.008 & -0.009 & 0.950 & 0.954 & 0.966 & 0.962 \\
+\addlinespace
+1 & 1000 & 0.25 & 0.500 & 0.004 & 0.004 & 0.004 & 0.005 & 0.938 & 0.942 & 0.960 & 0.960 \\
+1 & 1000 & 0.50 & 0.500 & -0.001 & -0.001 & -0.001 & -0.001 & 0.946 & 0.948 & 0.954 & 0.960 \\
+1 & 1000 & 0.75 & 0.500 & 0.002 & 0.002 & 0.001 & 0.003 & 0.958 & 0.946 & 0.958 & 0.972 \\
+\addlinespace
+1 & 2000 & 0.25 & 0.500 & 0.000 & -0.000 & 0.001 & 0.001 & 0.956 & 0.952 & 0.970 & 0.966 \\
+1 & 2000 & 0.50 & 0.500 & -0.000 & -0.000 & 0.000 & -0.000 & 0.966 & 0.956 & 0.966 & 0.978 \\
+1 & 2000 & 0.75 & 0.500 & 0.002 & 0.002 & 0.002 & 0.003 & 0.942 & 0.944 & 0.972 & 0.966 \\
+\addlinespace
+2 & 500 & 0.25 & 0.230 & 0.006 & 0.007 & 0.004 & 0.002 & 0.918 & 0.928 & 0.954 & 0.952 \\
+2 & 500 & 0.50 & 0.500 & -0.002 & -0.003 & -0.004 & -0.004 & 0.950 & 0.954 & 0.948 & 0.948 \\
+2 & 500 & 0.75 & 0.770 & -0.005 & -0.005 & -0.002 & -0.003 & 0.954 & 0.958 & 0.954 & 0.958 \\
+\addlinespace
+2 & 1000 & 0.25 & 0.230 & 0.001 & 0.003 & -0.001 & -0.001 & 0.940 & 0.932 & 0.970 & 0.974 \\
+2 & 1000 & 0.50 & 0.500 & 0.002 & 0.003 & 0.002 & 0.003 & 0.946 & 0.938 & 0.972 & 0.962 \\
+2 & 1000 & 0.75 & 0.770 & -0.005 & -0.007 & -0.004 & -0.005 & 0.946 & 0.946 & 0.958 & 0.970 \\
+\addlinespace
+2 & 2000 & 0.25 & 0.230 & -0.001 & -0.001 & -0.002 & -0.001 & 0.938 & 0.940 & 0.960 & 0.956 \\
+2 & 2000 & 0.50 & 0.500 & -0.000 & 0.000 & -0.001 & -0.000 & 0.944 & 0.954 & 0.964 & 0.956 \\
+2 & 2000 & 0.75 & 0.770 & 0.002 & 0.002 & 0.003 & 0.004 & 0.948 & 0.950 & 0.980 & 0.986 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,30 @@
+\begin{table}[t]\centering\small
+\caption{Surface-heterogeneity DGP $\sigma(u,t,X)=\sigma_0+\sigma_1 X_1+\sigma_2(t-u)+\sigma_3(u/t)$, so $m_{\tau,0}(u,t)$ is \emph{non-parallel} across $\tau$ (\textbf{fitted estimator: CC--A-CV}; $R=500$, coverage over $300$, $B=300$). ``het'' is the base design; ``stress'' adds high truncation, $32\%$ censoring, $\sim1.3$ visits/subject. \textbf{Both} slopes are reported: bias and bootstrap coverage of $\beta_{\tau,1}$ \emph{and} the continuous-covariate $\beta_{\tau,2}$. IMSE columns are Monte-Carlo \emph{means}: IMSE$_{\rm unm}$ over the whole grid, and---now shown side by side---IMSE$_{\rm msk_v}$ over the \emph{visit}-estimable cells and IMSE$_{\rm msk_s}$ over the \emph{distinct-subject}-estimable cells. The two local-support masks: ``\%n.e.\ visit'' (fewer than $10$ pre-onset \emph{visits} within $\pm0.5$ in $(u,t)$) and the surface-relevant ``\%n.e.\ subj'' (fewer than $5$ \emph{distinct subjects}); both are replicate-specific and design-only (not strictly comparable across $n$, and the two thresholds are not information-equivalent---the subject mask is looser by construction). Because visits cluster within subject, the subject mask flags about \emph{half} as many cells as the visit mask (stress: $\approx21\%$ vs.\ $\approx41\%$), yet the two masked IMSEs are nearly identical (columns msk$_{\rm v}$ vs.\ msk$_{\rm s}$, both $\approx0.10$ under stress), so the two operational masks give \emph{qualitatively similar} conclusions---not a formal mask-invariance claim, since the thresholds are not information-matched (the subject mask is looser) and each mask is replicate-specific (a fixed common-domain IMSE would be needed to compare convergence across $n$). ESS$^{\rm ip}/n_T$ is a \emph{design diagnostic only} (the corresponding IPCW weights; the fitted CC estimator has $w\equiv1$). $\beta$ stays broadly covered (finite-sample bias rises somewhat in the smallest stress sample); the low-information boundary surface should be read only on the estimable domain.}
+\label{tab:surface}\begin{tabular}{lrr rr rr rrr rr r}\toprule
+&&&\multicolumn{2}{c}{$\beta_1$}&\multicolumn{2}{c}{$\beta_2$}&\multicolumn{3}{c}{IMSE}&\multicolumn{2}{c}{\%n.e.}&\\
+\cmidrule(lr){4-5}\cmidrule(lr){6-7}\cmidrule(lr){8-10}\cmidrule(lr){11-12}
+set&$n$&$\tau$&bias&cov&bias&cov&unm&msk$_{\rm v}$&msk$_{\rm s}$&visit&subj&$\tfrac{\rm ESS^{ip}}{n_T}$\\\midrule
+het & 500 & 0.25 & -0.001 & 0.947 & 0.001 & 0.933 & 0.0326 & 0.0323 & 0.0324 & 0.03 & 0.02 & 0.98 \\
+het & 500 & 0.50 & -0.005 & 0.963 & 0.003 & 0.957 & 0.0285 & 0.0284 & 0.0284 & 0.03 & 0.02 & 0.98 \\
+het & 500 & 0.75 & 0.000 & 0.943 & -0.004 & 0.927 & 0.0320 & 0.0316 & 0.0317 & 0.03 & 0.02 & 0.97 \\
+\addlinespace
+het & 1000 & 0.25 & 0.005 & 0.920 & -0.002 & 0.937 & 0.0159 & 0.0158 & 0.0158 & 0.00 & 0.00 & 0.98 \\
+het & 1000 & 0.50 & 0.000 & 0.957 & 0.003 & 0.933 & 0.0133 & 0.0133 & 0.0133 & 0.00 & 0.00 & 0.98 \\
+het & 1000 & 0.75 & -0.004 & 0.933 & -0.003 & 0.943 & 0.0158 & 0.0158 & 0.0158 & 0.00 & 0.00 & 0.98 \\
+\addlinespace
+het & 2000 & 0.25 & 0.003 & 0.937 & 0.001 & 0.927 & 0.0077 & 0.0077 & 0.0077 & 0.00 & 0.00 & 0.98 \\
+het & 2000 & 0.50 & -0.000 & 0.933 & 0.003 & 0.957 & 0.0067 & 0.0067 & 0.0067 & 0.00 & 0.00 & 0.98 \\
+het & 2000 & 0.75 & 0.003 & 0.927 & -0.000 & 0.947 & 0.0074 & 0.0074 & 0.0074 & 0.00 & 0.00 & 0.98 \\
+\addlinespace
+stress & 500 & 0.25 & 0.019 & 0.947 & 0.010 & 0.947 & 0.1207 & 0.0956 & 0.1006 & 0.41 & 0.21 & 0.88 \\
+stress & 500 & 0.50 & 0.002 & 0.957 & -0.004 & 0.973 & 0.0976 & 0.0811 & 0.0840 & 0.40 & 0.21 & 0.86 \\
+stress & 500 & 0.75 & -0.026 & 0.947 & -0.007 & 0.957 & 0.1370 & 0.0900 & 0.0952 & 0.40 & 0.21 & 0.88 \\
+\addlinespace
+stress & 1000 & 0.25 & 0.013 & 0.953 & -0.003 & 0.940 & 0.0522 & 0.0459 & 0.0467 & 0.14 & 0.07 & 0.90 \\
+stress & 1000 & 0.50 & -0.003 & 0.940 & 0.001 & 0.953 & 0.0422 & 0.0384 & 0.0390 & 0.14 & 0.07 & 0.88 \\
+stress & 1000 & 0.75 & -0.008 & 0.943 & -0.001 & 0.957 & 0.0508 & 0.0463 & 0.0470 & 0.14 & 0.07 & 0.88 \\
+\addlinespace
+stress & 2000 & 0.25 & 0.007 & 0.960 & 0.002 & 0.943 & 0.0231 & 0.0221 & 0.0224 & 0.04 & 0.02 & 0.87 \\
+stress & 2000 & 0.50 & -0.000 & 0.943 & -0.000 & 0.937 & 0.0210 & 0.0200 & 0.0204 & 0.04 & 0.02 & 0.90 \\
+stress & 2000 & 0.75 & -0.010 & 0.930 & -0.001 & 0.940 & 0.0253 & 0.0242 & 0.0246 & 0.05 & 0.02 & 0.91 \\
+\bottomrule\end{tabular}\end{table}

@@ -1,0 +1,28 @@
+\begin{table}[t]\centering\small
+\caption{Variance-ladder for the plug-in clustered sandwich SER ($=\overline{\mathrm{SE}}/$Monte-Carlo ESD; $R=500$). $\widehat f/f_0$ is the per-cell \emph{median over replicates and rows} of the sparsity ratio. Rungs replace plug-in nuisances by truth one at a time, holding the A-CV point estimator fixed; the $g$-true rung uses the \emph{finite-sieve} oracle $g_J$ at the point-estimator's df; fix-$J$ is a \emph{separate} rung that re-selects the point estimator at a deterministic df (normalized by its own ESD). Both the $f$-true ($0.88$--$1.07$) and oracle-$(f,g)$ ($0.89$--$1.06$) rungs are near nominal, while the $g$-true rung \emph{alone} stays low ($0.54$--$0.95$): replacing the sparsity $\widehat f$ nearly closes the gap, replacing $g$ alone does not. Sparsity estimation is thus the \emph{largest identified contributor} in the small- and moderate-$n$ cells, though residual distortion remains and the $f$-true improvement is not monotone in every large-$n$ cell; the bread nuisances must be replaced \emph{jointly} to be consistent. Row/cluster $<1$ confirms clustering is already included (and matters).}
+\label{tab:ladder}\begin{tabular}{rrr r rrrrr r}\toprule
+Sc.&$n$&$\tau$&$\widehat f/f_0$&plug&$f$-true&$g$-true&oracle&fix-$J$&$\tfrac{\rm row}{\rm clus}$\\\midrule
+1 & 500 & 0.25 & 1.04 & 0.70 & 0.88 & 0.54 & 0.89 & 0.59 & 0.63 \\
+1 & 500 & 0.50 & 1.04 & 0.77 & 0.96 & 0.60 & 0.97 & 0.67 & 0.61 \\
+1 & 500 & 0.75 & 1.02 & 0.75 & 0.92 & 0.58 & 0.93 & 0.62 & 0.63 \\
+\addlinespace
+1 & 1000 & 0.25 & 1.02 & 0.85 & 0.95 & 0.74 & 0.95 & 0.79 & 0.62 \\
+1 & 1000 & 0.50 & 1.02 & 0.89 & 0.98 & 0.79 & 0.98 & 0.82 & 0.60 \\
+1 & 1000 & 0.75 & 1.02 & 0.87 & 0.96 & 0.76 & 0.96 & 0.81 & 0.62 \\
+\addlinespace
+1 & 2000 & 0.25 & 1.00 & 0.93 & 0.97 & 0.88 & 0.97 & 0.90 & 0.60 \\
+1 & 2000 & 0.50 & 1.00 & 1.02 & 1.07 & 0.95 & 1.06 & 0.99 & 0.59 \\
+1 & 2000 & 0.75 & 1.00 & 0.94 & 0.98 & 0.87 & 0.98 & 0.91 & 0.60 \\
+\addlinespace
+2 & 500 & 0.25 & 1.03 & 0.78 & 0.91 & 0.55 & 0.92 & 0.68 & 0.63 \\
+2 & 500 & 0.50 & 1.02 & 0.80 & 0.93 & 0.64 & 0.95 & 0.69 & 0.61 \\
+2 & 500 & 0.75 & 1.04 & 0.83 & 0.98 & 0.64 & 0.99 & 0.72 & 0.64 \\
+\addlinespace
+2 & 1000 & 0.25 & 1.01 & 0.93 & 0.99 & 0.82 & 1.00 & 0.87 & 0.61 \\
+2 & 1000 & 0.50 & 1.02 & 0.86 & 0.93 & 0.78 & 0.93 & 0.82 & 0.60 \\
+2 & 1000 & 0.75 & 1.01 & 0.89 & 0.95 & 0.79 & 0.95 & 0.84 & 0.61 \\
+\addlinespace
+2 & 2000 & 0.25 & 1.00 & 0.98 & 1.00 & 0.92 & 1.00 & 0.95 & 0.60 \\
+2 & 2000 & 0.50 & 1.01 & 0.98 & 1.01 & 0.91 & 1.01 & 0.96 & 0.59 \\
+2 & 2000 & 0.75 & 1.00 & 0.95 & 0.97 & 0.88 & 0.96 & 0.92 & 0.60 \\
+\bottomrule\end{tabular}\end{table}

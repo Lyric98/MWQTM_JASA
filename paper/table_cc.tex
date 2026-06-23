@@ -1,0 +1,28 @@
+\begin{table}[t]\centering\small
+\caption{\textbf{Paired} CC--A-CV vs.\ IPCW--A-CV on the same replicates and bootstrap draws ($R=1000$; coverage over $500$; $B=500$). $\Delta$cov $=\mathrm{cov}_{\rm CC}-\mathrm{cov}_{\rm IPCW}$; McNemar $(b,c)$ are the discordant counts (CC covers \& IPCW not; IPCW covers \& CC not) with the two-sided \emph{exact} (binomial) McNemar $p$; ESD ratio is CC/IPCW. Of the $18$ cells, \emph{one} (Sc.~1, $n{=}1000$, $\tau{=}0.75$: $b{=}6,c{=}0$) gives an unadjusted exact McNemar $p=0.031$; \textbf{no cell remains significant after a Holm/Bonferroni multiplicity correction} (the next smallest is $p=0.07$). The absolute coverage differences are $|\Delta\mathrm{cov}|\le0.012$ with no systematic direction. At $R_{\rm cov}=500$ this does not formally establish equivalence at a $0.02$ margin (a paired TOST would, and is left to a larger run) but is consistent with it. Separately, the CC ESD is smaller in every cell---an \emph{observed} efficiency improvement under these DGPs (not a claim of provably greater accuracy, which a non-significant test cannot support).}
+\label{tab:cc}\begin{tabular}{rrr rr r rr r r}\toprule
+Sc.&$n$&$\tau$&cov$_{\rm CC}$&cov$_{\rm IPCW}$&$\Delta$cov&$b$&$c$&$p$&$\tfrac{\rm ESD_{CC}}{\rm ESD_{IPCW}}$\\\midrule
+1 & 500 & 0.25 & 0.960 & 0.958 & 0.002 & 3 & 2 & 1.00 & 0.955 \\
+1 & 500 & 0.50 & 0.968 & 0.962 & 0.006 & 6 & 3 & 0.51 & 0.936 \\
+1 & 500 & 0.75 & 0.950 & 0.954 & -0.004 & 2 & 4 & 0.69 & 0.959 \\
+\addlinespace
+1 & 1000 & 0.25 & 0.938 & 0.942 & -0.004 & 3 & 5 & 0.73 & 0.942 \\
+1 & 1000 & 0.50 & 0.946 & 0.948 & -0.002 & 3 & 4 & 1.00 & 0.950 \\
+1 & 1000 & 0.75 & 0.958 & 0.946 & 0.012 & 7 & 1 & 0.07 & 0.949 \\
+\addlinespace
+1 & 2000 & 0.25 & 0.956 & 0.952 & 0.004 & 4 & 2 & 0.69 & 0.942 \\
+1 & 2000 & 0.50 & 0.966 & 0.956 & 0.010 & 6 & 1 & 0.13 & 0.953 \\
+1 & 2000 & 0.75 & 0.942 & 0.944 & -0.002 & 7 & 8 & 1.00 & 0.956 \\
+\addlinespace
+2 & 500 & 0.25 & 0.918 & 0.928 & -0.010 & 3 & 8 & 0.23 & 0.951 \\
+2 & 500 & 0.50 & 0.950 & 0.954 & -0.004 & 3 & 5 & 0.73 & 0.954 \\
+2 & 500 & 0.75 & 0.954 & 0.958 & -0.004 & 2 & 4 & 0.69 & 0.958 \\
+\addlinespace
+2 & 1000 & 0.25 & 0.940 & 0.932 & 0.008 & 9 & 5 & 0.42 & 0.947 \\
+2 & 1000 & 0.50 & 0.946 & 0.938 & 0.008 & 5 & 1 & 0.22 & 0.945 \\
+2 & 1000 & 0.75 & 0.946 & 0.946 & 0.000 & 4 & 4 & 1.00 & 0.948 \\
+\addlinespace
+2 & 2000 & 0.25 & 0.938 & 0.940 & -0.002 & 2 & 3 & 1.00 & 0.949 \\
+2 & 2000 & 0.50 & 0.944 & 0.954 & -0.010 & 1 & 6 & 0.13 & 0.951 \\
+2 & 2000 & 0.75 & 0.948 & 0.950 & -0.002 & 3 & 4 & 1.00 & 0.950 \\
+\bottomrule\end{tabular}\end{table}
